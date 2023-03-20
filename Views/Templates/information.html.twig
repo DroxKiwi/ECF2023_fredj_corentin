@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+{% set modepreference = templateVars[1] %}
+
+<!DOCTYPE html>
+
+<html>
+  {% block content %}
+
+        <div class="container-fluid text-center">
+          <header>
+            <h1>
+              Bienvenu sur l'application !
+            </h1>
+            <ul class="nav nav-tabs justify-content-center">
+              <li class="nav-item">
+                <a class="nav-link" href="/">App</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/menu">La Carte</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/reservation">Réserver une table</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/contact">Nous Contacter</a>
+              </li>
+              <li>
+                <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" type="button" style="margin-left: 10px;" class="btn btn-outline-info">{{ templateVars[0] }}</button>
+              </li>
+            </ul>
+          </header>
+          <h2>
+            Page d'information de compte
+          </h2>
+          <div class="row">
+            <div class="col">
+              <h3>
+                  <br>
+                  email : {{ templateVars[2] }}
+                  <button type="button" style="margin-top: 10px;" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#emailModal">Modifier</button>
+                  <br>
+                  password : ***********
+                  <button type="button" style="margin-top: 10px;" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#passwordModal">Modifier</button>
+                  <br>
+                  <button type="button" style="margin-top: 10px;" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">Supprimer mon compte !</button>
+              </h3>
+
+                                    <!-- Button trigger modal -->
+
+
+                  <!-- Modal for email -->
+                  <div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">Modification</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/userUpdate" method="post">
+                            <div class="mb-3">
+                              <label for="email" class="form-label">Entrez votre nouveau mail</label>
+                              <input type="text" class="form-control" id="email" name="email" required>
+                            </div>
+                            <button type="submit" class="btn btn-outline-success">Sauvegarder</button>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Annuler</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+        
+
+                  <!-- Modal for password -->
+                  <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">Modification</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/userUpdate" method="post">
+                            <div class="mb-3">
+                              <label for="password" class="form-label">Entrez votre nouveau mot de passe</label>
+                              <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <button type="submit" class="btn btn-outline-success">Sauvegarder</button>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Annuler</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <!-- Modal for delete account -->
+                  <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Account</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/userDelete" method="post">
+                            <button type="submit" class="btn btn-outline-success">Confirmer</button>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Annuler</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+          </div>
+
+        <!-- OffCanvas and hidden elements -->
+
+          <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasExampleLabel">{{ id }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div class="row justify-content-center">
+                <div class="col-12">
+                  <button onclick="location.href = '/information'" type="button" style="margin-bottom: 10px;" class="btn btn-outline-secondary">Informations de compte</button>
+                </div>
+                {% if templateVars[2] == "ROLE_USER" %}
+                  <div class="col-12">
+                    <button type="button" onclick="location.href = '/report'" style="margin-bottom: 10px;" class="btn btn-outline-secondary">Rapport d'erreur</button>
+                  </div>
+                {% endif %}
+                <div class="col-12">
+                  <button type="button" onclick="location.href = '/settings'" style="margin-bottom: 10px;" class="btn btn-outline-secondary">Préferences de compte</button>
+                </div>
+                <div class="col-12">
+                  <button onclick="location.href = '/userLogout'" style="margin-bottom: 10px;" type="button" class="btn btn-outline-warning">Déconnexion</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+  {% endblock %}
+</html>

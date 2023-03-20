@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+    {% block content %}
+      <div class="container-fluid text-center">
+
+        <header>
+        <h1>
+            Bienvenu sur l'application !
+        </h1>
+        <ul class="nav nav-tabs justify-content-center">
+            <li class="nav-item">
+            <a class="nav-link" href="/">App</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="/contact">Nous contacter</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="/suscribe">Souscrire à la Bêta Test !</a>
+            </li>
+            <li>
+            <button onclick="location.href = '#'" type="button" style="margin-left: 10px;" class="btn btn-outline-success">Connexion</button>
+            </li>
+            <li>
+            <button onclick="location.href = '/userCreate'" type="button" style="margin-left: 10px;" class="btn btn-outline-primary">Créer un compte</button>
+            </li>
+        </ul>
+        </header>
+
+
+
+
+        <div class="row justify-content-center">
+          <div class="col-6">
+            <form action="/userLogin" method="post">
+              <input type="hidden" class="form-control" id="sendLogin" name="sendLogin" value="true">
+              <div class="mb-3">
+                <label for="id" class="form-label">Identifiant (Adress email @)</label>
+                <input type="text" class="form-control" id="email" aria-describedby="idHelp" name="email" required>
+                <div id="idHelp" class="form-text">Votre Email ne sera jamais partagé !</div>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Mot de passe</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+              </div>
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                <label class="form-check-label" for="remember">Se souvenir de moi</label>
+              </div>
+              <button type="submit" class="btn btn-outline-light">Se connecter</button>
+            </form>
+          </div>
+        </div>
+      <div>
+    {% endblock %}
+</html>

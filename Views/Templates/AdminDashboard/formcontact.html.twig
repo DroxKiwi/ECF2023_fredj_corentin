@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+{% set modepreference = templateVars[1] %}
+
+<!DOCTYPE html>
+
+<html>
+  {% block content %}
+
+        <div class="container-fluid text-center">
+          <header>
+            <h1>
+              Bienvenu sur l'application !
+            </h1>
+            <ul class="nav nav-tabs justify-content-center">
+              <li>
+                <button onclick="location.href = '/'" type="button" style="margin-right: 20px;" class="btn btn-outline-info">Application</button>
+              </li>
+              <li>
+                <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" type="button" style="margin-left: 10px;" class="btn btn-outline-info">{{ templateVars[0] }}</button>
+              </li>
+            </ul>
+          </header>
+          <h2>
+            Historique de logs
+          </h2>
+
+
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard">Liste utilisateurs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logs">Logs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/formcontact">formulaire de contacts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/managesite">Gestion du site</a>
+            </li>
+          </ul>
+
+          <table class="table">
+            <thead>
+              <tr>
+                  formulaires de contact :
+              </tr>
+            </thead>
+            <tbody>
+                {% for forms in templateVars[2] %}
+                <tr>
+                  <td>
+                  {% for form in forms %}
+                    <td>
+                      {{ form }}
+                    </td>
+                  {% endfor %}
+                  </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        <!-- OffCanvas and hidden elements -->
+
+          <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasExampleLabel">{{ id }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div class="row justify-content-center">
+                <div class="col-12">
+                  <button onclick="location.href = '/information'" type="button" style="margin-bottom: 10px;" class="btn btn-outline-secondary">Informations de compte</button>
+                </div>
+                <div class="col-12">
+                  <button type="button" onclick="location.href = '/settings'" style="margin-bottom: 10px;" class="btn btn-outline-secondary">Préferences de compte</button>
+                </div>
+                <div class="col-12">
+                  <button onclick="location.href = '/userLogout'" style="margin-bottom: 10px;" type="button" class="btn btn-outline-warning">Déconnexion</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+  {% endblock %}
+</html>

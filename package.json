@@ -1,0 +1,41 @@
+{
+  "name": "studiecf2023_fredj_corentin",
+  "version": "1.0.0",
+  "description": "This is the repository for the final test of Studi. There is a README.md document, it explain the project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "env-cmd -f ./.env.dev node index.js",
+    "prod": "env-cmd -f ./.env.prod node secureSSL.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DroxKiwi/studiECF2023_Fredj_Corentin.git"
+  },
+  "keywords": [],
+  "author": "Fredj Corentin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DroxKiwi/studiECF2023_Fredj_Corentin/issues"
+  },
+  "homepage": "https://github.com/DroxKiwi/studiECF2023_Fredj_Corentin#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "bootstrap": "^5.3.0-alpha1",
+    "cookie-parser": "^1.4.6",
+    "cookieparser": "^0.1.0",
+    "crypto-js": "^4.1.1",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
+    "fs": "^0.0.1-security",
+    "jquery": "^3.6.4",
+    "pg": "^8.10.0",
+    "pg-hstore": "^2.3.4",
+    "twig": "^1.16.0",
+    "uid2": "^1.0.0"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "nodemon": "^2.0.21"
+  }
+}

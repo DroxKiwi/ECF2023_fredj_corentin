@@ -1,0 +1,14 @@
+body{
+    background-color: rgb(226, 226, 226);
+    color: rgb(48, 48, 48);
+}
+
+table, th, td, tr {
+    border: 1px solid black;
+    background-color: rgb(166, 176, 240) !important;
+    color: rgb(48, 48, 48);
+}
+
+.userselect:hover{
+    background-color: rgb(162, 192, 162) !important;
+}

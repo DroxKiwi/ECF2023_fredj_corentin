@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+{% set modepreference = templateVars[1] %}
+
+<!DOCTYPE html>
+
+<html>
+  {% block content %}
+        <div class="container-fluid text-center">
+          <header>
+            <h1>
+              Bienvenu sur l'application !
+            </h1>
+            <ul class="nav nav-tabs justify-content-center">
+              <li>
+                {% if templateVars[2] == "ROLE_ADMIN" %}
+                  <button onclick="location.href = '/dashboard'" type="button" style="margin-right: 20px;" class="btn btn-outline-info">Tableau de bord</button>
+                {% endif %}
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/">Accueil</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/menu">La Carte</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Réserver une table</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/contact">Nous Contacter</a>
+              </li>
+            {% if id == "unauthentificated" %}
+              <li>
+                <button onclick="location.href = '/userLogin'" type="button" style="margin-left: 10px;" class="btn btn-outline-success">Connexion</button>
+              </li>
+              <li>
+                <button onclick="location.href = '/userCreate'" type="button" style="margin-left: 10px;" class="btn btn-outline-primary">Créer un compte</button>
+              </li>
+            {% else %}
+              <li>
+                <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" type="button" style="margin-left: 10px;" class="btn btn-outline-info">{{ templateVars[0] }}</button>
+              </li>
+            {% endif %}
+            </ul>
+          </header>
+          <br>
+          <h2>
+            Réservez une table !
+          </h2>
+
+
+        <!-- OffCanvas and hidden elements -->
+          <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasExampleLabel">{{ id }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div class="row justify-content-center">
+                <div class="col-12">
+                  <button onclick="location.href = '/information'" type="button" style="margin-bottom: 10px;" class="btn btn-outline-secondary">Informations de compte</button>
+                </div>
+                <div class="col-12">
+                  <button type="button" onclick="location.href = '/settings'" style="margin-bottom: 10px;" class="btn btn-outline-secondary">Préferences de compte</button>
+                </div>
+                <div class="col-12">
+                  <button onclick="location.href = '/userLogout'" style="margin-bottom: 10px;" type="button" class="btn btn-outline-warning">Déconnexion</button>
+                </div>
+              </div>
+            </div>
+          </div>
+  {% endblock %}
+</html>

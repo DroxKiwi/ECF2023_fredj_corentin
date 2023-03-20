@@ -1,0 +1,18 @@
+body {
+  background-color: rgb(68, 68, 68);
+  color: white;
+}
+
+.colortest1 {
+  background-color: red;
+}
+
+table, th, td, tr {
+  border: 1px solid white;
+  background-color: rgb(60, 66, 104) !important;
+  color: white;
+}
+
+.userselect:hover {
+  background-color: rgb(53, 88, 53) !important;
+}/*# sourceMappingURL=styledark.css.map */

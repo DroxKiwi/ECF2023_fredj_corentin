@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+{% set modepreference = templateVars[1] %}
+
+<!DOCTYPE html>
+
+<html>
+  {% block content %}
+
+        <div class="container-fluid text-center">
+          <header>
+            <h1>
+              Bienvenu sur l'application !
+            </h1>
+            <ul class="nav nav-tabs justify-content-center">
+              <li class="nav-item">
+                <a class="nav-link" href="/">App</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/menu">La Carte</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/reservation">Réserver une table</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/contact">Nous Contacter</a>
+              </li>
+              <li>
+                <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" type="button" style="margin-left: 10px;" class="btn btn-outline-info">{{ templateVars[0] }}</button>
+              </li>
+            </ul>
+          </header>
+          <h2>
+            Page de paramètre de compte utilisateur
+          </h2>
+          <div class="row">
+            <div class="col">
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <form action="/settingsPreferences" method="post">
+                    <div class="mb-3">
+                      <label for="colorapp" class="form-label">couleur d'application</label>
+                      <select id="colorapp" name="colorapp">
+                        <option name="darkmode" value="darkmode">dark mode</option>
+                        <option name="lightmode" value="lightmode">light mode</option>
+                      </select>
+                    </div>
+                    {% if templateVars[1] == "lightmode" %}
+                      <button type="submit" class="btn btn-outline-dark">Enregistrer</button>
+                    {% else %}
+                      <button type="submit" class="btn btn-outline-light">Enregistrer</button>
+                    {% endif %}
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <!-- OffCanvas and hidden elements -->
+
+          <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasExampleLabel">{{ id }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div class="row justify-content-center">
+                <div class="col-12">
+                  <button onclick="location.href = '/information'" type="button" style="margin-bottom: 10px;" class="btn btn-outline-secondary">Informations de compte</button>
+                </div>
+                <div class="col-12">
+                  <button type="button" onclick="location.href = '/settings'" style="margin-bottom: 10px;" class="btn btn-outline-secondary">Préferences de compte</button>
+                </div>
+                <div class="col-12">
+                  <button onclick="location.href = '/userLogout'" style="margin-bottom: 10px;" type="button" class="btn btn-outline-warning">Déconnexion</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+  {% endblock %}
+</html>

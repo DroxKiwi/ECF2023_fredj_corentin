@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block header %}
+        <title>Quai Antique</title>
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        {% block stylesheets %}
+            <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
+                {% if modepreference == "lightmode" %}
+                    <link rel="stylesheet" href="/CSS/stylelight.css"/>
+                {% else %}
+                    <link rel="stylesheet" href="/CSS/styledark.css"/>
+                {% endif %}
+        {% endblock %}
+    {% endblock %}
+</head>
+<body>
+    {% if modepreference == "lightmode" %}
+        <a href="/"> <img src="/Images/BeWave_logo_noir.png" style="position: absolute; height: 50px; width: 50px;" alt="logo"/></a>
+    {% else %}
+        <a href="/"> <img src="/Images/BeWave_logo_blanc.png" style="position: absolute; height: 50px; width: 50px;"  alt="logo"/></a>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+    {% block footer %}
+
+    {% endblock %}
+
+    {% block javascripts %}
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="/jquery/dist/jquery.min.js"></script>
+        <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    {% endblock %}
+</body>
+</html>

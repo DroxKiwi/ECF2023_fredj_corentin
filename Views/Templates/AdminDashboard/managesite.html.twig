@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+{% set modepreference = templateVars[1] %}
+
+<!DOCTYPE html>
+
+<html>
+  {% block content %}
+        <div class="container-fluid text-center">
+          <header>
+            <h1>
+              Bienvenu sur l'application !
+            </h1>
+            <ul class="nav nav-tabs justify-content-center">
+              <li>
+                <button onclick="location.href = '/'" type="button" style="margin-right: 20px;" class="btn btn-outline-info">Application</button>
+              </li>
+              <li>
+                <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" type="button" style="margin-left: 10px;" class="btn btn-outline-info">{{ templateVars[0] }}</button>
+              </li>
+            </ul>
+          </header>
+          <h2>
+            Gestion du site
+          </h2>
+
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard">Liste utilisateurs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logs">Logs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/formcontact">formulaire de contacts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/managesite">Gestion du site</a>
+            </li>
+          </ul>
+
+        <form action="/uploadImage" method="post" enctype="multipart/form-data">
+            <br>
+            <input type="hidden" class="form-control" id="uploadImage" name="uploadImage" value="true">
+            <input type="file" class="form-control" id="image" name="image" required>
+            <label for="title">Titre de l'image</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+            <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Ajouter</button>
+        </form>
+
+        <br>
+
+        <h3>Liste d'images en base de données</h3>
+
+        <h4>Votre image ne doit pas comporter de caractères spéciaux! ( EX : _ / ' )</h4>
+        <div class="row">
+        {% for image in templateVars[2] %}
+            <div class="col-xl-2 col-md-4 col-sm-6">
+                <li>
+                    {{ image.name }}
+                    <br>
+                    {{ image.title }}
+                    <form action="/deleteImage" method="post" enctype="multipart/form-data">
+                        <input type="hidden" class="form-control" id="deleteImage" name="deleteImage" value="true">
+                        <input type="hidden" class="form-control" id="name_image" name="name_image" value="{{image.name}}">
+                        <img src="/Uploads/{{image.name}}" alt="name_image" style="height: 100px; width: 100px;" />
+                        <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Supprimer</button>
+                    </form>
+                </li>
+            </div>
+        {% endfor %}
+        </div>
+
+
+
+
+        <!-- OffCanvas and hidden elements -->
+
+          <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasExampleLabel">{{ id }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div class="row justify-content-center">
+                <div class="col-12">
+                  <button onclick="location.href = '/information'" type="button" style="margin-bottom: 10px;" class="btn btn-outline-secondary">Informations de compte</button>
+                </div>
+                <div class="col-12">
+                  <button type="button" onclick="location.href = '/settings'" style="margin-bottom: 10px;" class="btn btn-outline-secondary">Préferences de compte</button>
+                </div>
+                <div class="col-12">
+                  <button onclick="location.href = '/userLogout'" style="margin-bottom: 10px;" type="button" class="btn btn-outline-warning">Déconnexion</button>
+                </div>
+              </div>
+            </div>
+          </div>
+  {% endblock %}
+</html>

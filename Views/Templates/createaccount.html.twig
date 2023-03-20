@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+    {% block content %}
+      <div class="container-fluid text-center">
+        <header>
+        <h1>
+            Bienvenu sur l'application !
+        </h1>
+        <ul class="nav nav-tabs justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link" href="/">App</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/menu">La Carte</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/reservation">Réserver une table</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/contact">Nous Contacter</a>
+            </li>
+            <li>
+            <button onclick="location.href = '/userLogin'" type="button" style="margin-left: 10px;" class="btn btn-outline-success">Connexion</button>
+            </li>
+            <li>
+            <button onclick="location.href = '#'" type="button" style="margin-left: 10px;" class="btn btn-outline-primary">Créer un compte</button>
+            </li>
+        </ul>
+        </header>
+
+
+        <div class="row justify-content-center">
+          <div class="col-6">
+            <form action="/userCreate" method="post">
+              <input type="hidden" class="form-control" id="sendCreate" name="sendCreate" value="true">
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" id="email" name="email" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Mot de passe</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+              </div>
+              <button type="submit" class="btn btn-outline-light">Créer mon compte</button>
+            </form>
+          </div>
+        </div>
+      <div>
+    {% endblock %}
+</html>
