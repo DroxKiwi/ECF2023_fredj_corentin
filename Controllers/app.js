@@ -184,4 +184,5 @@ async function redirectReservation(req, res){
     }
 }
 
+        // If we send a request for uploading an image
 module.exports = { redirectHomepage, redirectContact, redirectInformation, redirectSettings, redirectMenu, redirectReservation }
