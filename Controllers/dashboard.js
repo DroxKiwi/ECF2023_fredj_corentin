@@ -121,7 +121,17 @@ async function addMenu(req, res){
                 throw error
             }
             else {
-
+                const modepreference = results.rows[0].preferences[0]
+                pool.query(`SELECT * FROM images`, (error, results) => {
+                    if (error){
+                        throw error
+                    }
+                    else {
+                        const imagesInDB = results.rows
+                        const templateVars = [ id, modepreference, imagesInDB ]
+                        res.render('./Templates/AdminDashboard/managesite.html.twig', { templateVars })
+                    }
+                })
             }
         })
     }
@@ -334,4 +344,4 @@ async function redirectManageSite(req, res){
 }
 
 
-module.exports = { redirectDashboard, redirectShowUser, redirectLogs, redirectFormcontact, redirectManageSite, uploadImage, deleteImage, selectImage }
+module.exports = { redirectDashboard, redirectShowUser, redirectLogs, redirectFormcontact, redirectManageSite, uploadImage, deleteImage, selectImage, addMenu }
