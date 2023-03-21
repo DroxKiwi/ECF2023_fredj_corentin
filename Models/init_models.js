@@ -19,7 +19,7 @@ const imagesModel = fs.readFileSync('images.sql').toString()
 const menusModel = fs.readFileSync('menus.sql').toString()
 const formulesModel = fs.readFileSync('formules.sql').toString()
 const openhoursModel = fs.readFileSync('openhours.sql').toString()
-
+const reservationsModel = fs.readFileSync('reservations.sql').toString()
 
 // Execute the SQL commands in the database
 pool.query(usersModel, (err, result) => {
@@ -49,7 +49,13 @@ pool.query(usersModel, (err, result) => {
                                                     if (err) throw err
                                                     else {
                                                         console.log("openhoursModel imported")
-                                                        console.log("All models are imported succesfully !")
+                                                        pool.query(reservationsModel, (err, result) => {
+                                                            if (err) throw err
+                                                            else {
+                                                                console.log("reservationsModel imported")
+                                                                console.log("All models are imported succesfully !")
+                                                            }
+                                                        })
                                                     }
                                                 })
                                             }

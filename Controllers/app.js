@@ -174,6 +174,56 @@ async function redirectMenu(req, res){
     }
 }
 
+function getDayName(dateStr, locale)
+{
+    var date = new Date(dateStr);
+    return date.toLocaleDateString(locale, { weekday: 'long' });        
+}
+
+async function selectHourReservation(req, res){
+    if (req.role == "ROLE_USER" || req.role == "ROLE_ADMIN"){
+        const userToken = req.cookies.userToken.token
+        const id = req.email
+        const { guests, dateres } = req.body
+        var dateStr = dateres;
+        var day = getDayName(dateStr, "fr-FR"); 
+        pool.query(`SELECT state, openhour, closehour FROM openhours WHERE day = '${day}'`, (error, results) => {
+            if (error){
+                throw error
+            }
+            else {
+                const state = results.rows[0].state
+                if (state == "ouvert"){
+                    const openhour = results.rows[0].openhour
+                    const closehour = results.rows[0].closehour
+                    pool.query(`SELECT preferences FROM users WHERE token = '${userToken}'`, (error, results) => {
+                        if (error){
+                            throw error
+                        }
+                        else {
+                            const role = req.role
+                            const modepreference = results.rows[0].preferences[0]
+                            const tabhour = []
+                            tabhour[0] = openhour
+                            // Here we get < closehour ! make it 1 hour before closing
+                            for (let i = 1; i < closehour-openhour; i++){
+                                tabhour[i] = openhour+i
+                            }
+                            const stage = "selecthour"
+                            const templateVars = [id, modepreference, role, tabhour, stage, guests, dateres]
+                            res.render('./Templates/reservation.html.twig', { templateVars })
+                        }
+                    })
+                } 
+            }
+        })
+    }
+    else {
+        const id = "unauthentificated"
+        res.render('./Templates/reservation.html.twig', { id })
+    }
+}
+
 async function redirectReservation(req, res){
     if (req.role == "ROLE_USER" || req.role == "ROLE_ADMIN"){
         const userToken = req.cookies.userToken.token
@@ -184,8 +234,17 @@ async function redirectReservation(req, res){
             }
             else {
                 const role = req.role
-                modepreference = results.rows[0].preferences[0]
-                const templateVars = [id, modepreference, role]
+                const modepreference = results.rows[0].preferences[0]
+                var dateObj = new Date()
+                console.log(dateObj)
+                var tabdate = []
+                tabdate[0] = dateObj.getUTCMonth()+1+'/'+(dateObj.getUTCDate())+'/'+(dateObj.getUTCFullYear())
+                for (let i = 1; i < 14; i++){
+                    dateObj.setDate(dateObj.getDate()+1);
+                    tabdate[i] = dateObj.getUTCMonth()+1+'/'+(dateObj.getUTCDate())+'/'+(dateObj.getUTCFullYear())
+                }
+                const stage = "selectday"
+                const templateVars = [id, modepreference, role, tabdate, stage]
                 res.render('./Templates/reservation.html.twig', { templateVars })
             }
         })
@@ -197,4 +256,4 @@ async function redirectReservation(req, res){
 }
 
         // If we send a request for uploading an image
-module.exports = { redirectHomepage, redirectContact, sendFormContact, redirectInformation, redirectSettings, redirectMenu, redirectReservation }
+module.exports = { redirectHomepage, redirectContact, sendFormContact, redirectInformation, redirectSettings, redirectMenu, redirectReservation, selectHourReservation }
