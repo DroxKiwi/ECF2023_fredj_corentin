@@ -21,7 +21,7 @@
             </ul>
           </header>
           <h2>
-            Historique de logs
+            {{ templateVars[4] }}
           </h2>
 
 
@@ -30,7 +30,7 @@
               <a class="nav-link" href="/dashboard">Liste utilisateurs</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Logs</a>
+              <a class="nav-link" href="/logs">Logs</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/formcontact">formulaire de contacts</a>
@@ -40,6 +40,58 @@
             </li>
           </ul>
 
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Informations utilisateur</th>
+                <th scope="col">Accès</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <form action="/userUpdate" method="post">
+                <input type="hidden" class="form-control" id="nonselfupdate" name="nonselfupdate" value="true">
+                <input type="hidden" class="form-control" id="user_id" name="user_id" value="{{ templateVars[2] }}">
+                <tr>
+                  <td>Identifiant BDD : {{ templateVars[2] }}</td>
+                  <td>Refusé</td>
+                </tr>
+                <tr>
+                  <td>Email : {{ templateVars[3] }}</td>
+                  <td><input type="text" class="form-control" id="email" name="email" value="{{ templateVars[4] }}" required></td>
+                </tr>
+                <tr>
+                  <td>Token : {{ templateVars[4] }}</td>
+                  <td>Refusé</td>
+                </tr>
+                <tr>
+                  <td>Role : {{ templateVars[5] }}</td>
+                  <td>
+                    <select id="role" name="role" required>
+                      <option value="ROLE_USER">Utilisateur</option>
+                      <option value="ROLE_ADMIN">Administrateur</option>
+                    </select>
+                  </td>
+                </tr>
+                  <button type="submit" class="btn btn-outline-warning">Enregistrer</button>
+              </form>
+              <form action="/resetpassworduser" method="post">
+                <input type="hidden" class="form-control" id="user_id" name="user_id" value="{{ templateVars[2] }}">
+                <tr>
+                  <td>Mot de passe</td>
+                  <td><button type="submit" class="btn btn-outline-danger">Reinitialiser</button></td>
+                </tr>
+              </form>
+            </tbody>
+          </table>
+
+          <form action="/userDelete" method="post">
+            <input type="hidden" class="form-control" id="nonselfupdate" name="nonselfupdate" value="true">
+            <input type="hidden" class="form-control" id="user_id" name="user_id" value="{{ templateVars[2] }}">
+            <button type="submit" class="btn btn-outline-danger">Supprimer utilisateur</button>
+          </form>
+
           <table class="table">
             <thead>
               <tr>
@@ -47,20 +99,21 @@
               </tr>
             </thead>
             <tbody>
-                {% for logs in templateVars[2] %}
+                {% for logs in templateVars[6] %}
                 <tr>
                   <td>
                   {% for log in logs %}
-                    <td>
                       {{ log }}
-                    </td>
                   {% endfor %}
                   </td>
                 </tr>
                 {% endfor %}
             </tbody>
+        </div>
 
-        <!-- OffCanvas and hidden elements -->
+
+
+          <!-- OffCanvas and hidden elements -->
 
           <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
@@ -77,12 +130,8 @@
                 </div>
                 <div class="col-12">
                   <button onclick="location.href = '/userLogout'" style="margin-bottom: 10px;" type="button" class="btn btn-outline-warning">Déconnexion</button>
-                </div>
               </div>
             </div>
           </div>
-
-        </div>
-
   {% endblock %}
 </html>

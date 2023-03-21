@@ -161,10 +161,7 @@ async function resetPassword(req, res){
 
 // Update an existing user
 async function userUpdate(req, res){
-    if (req.role != "ROLE_USER" && req.role != "ROLE_ADMIN"){
-        res.redirect(302, '/')
-    }
-    else {
+    if (req.role == "ROLE_USER" || req.role == "ROLE_ADMIN"){
         const { email, password, role, nonselfupdate, user_id } = req.body
 
         // Here we are updating an user giving by his user_id. Only Admin can do that
@@ -243,14 +240,14 @@ async function userUpdate(req, res){
             }
         }
     }
+    else {
+        res.redirect(302, '/')
+    }
 }
 
 // Delete a user by token selection
 async function userDelete(req, res){
-    if (req.role != "ROLE_USER" && req.role != "ROLE_ADMIN"){
-        return res.json("Seulement les Admins peuvent effectuer cette action")
-    }
-    else {
+    if (req.role == "ROLE_USER" || req.role == "ROLE_ADMIN"){
         const { user_id, nonselfupdate } = req.body
         if (req.role == "ROLE_ADMIN" && nonselfupdate == "true"){
             pool.query(`SELECT email FROM users WHERE user_id = '${user_id}'`, (error ,results) => {
@@ -299,6 +296,9 @@ async function userDelete(req, res){
                 }
             })
         }
+    }
+    else {
+        return res.json("Seulement les Admins peuvent effectuer cette action")
     }
 }
 

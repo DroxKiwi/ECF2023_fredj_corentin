@@ -38,6 +38,7 @@ async function redirectShowUser(req, res){
                             }
                             else {
                                 const logs = results.rows
+                                console.log(logs)
                                 const templateVars = [ id, modepreference, user_id, email, token, role, logs ]
                                 res.render('./Templates/AdminDashboard/showuser.html.twig', { templateVars })
                             }
@@ -110,28 +111,57 @@ async function redirectFormcontact(req, res){
     }
 }
 
-
-async function addMenu(req, res){
+async function addFormule(req, res){
     if (req.role == "ROLE_ADMIN"){
-        const userToken = req.cookies.userToken.token
-        const id = req.email
-        const { type, title, description, price } = req.body
-        pool.query(`INSERT INTO menus (type, title, description, price) VALUES ('${type}', ${title}, ${description}, ${price})`, (error, results) => {
+        const { title, description, price } = req.body
+        pool.query(`INSERT INTO formules (title, period, description, price) VALUES ('${title}', '${period}', '${description}', '${price}')`, (error, results) => {
             if (error){
                 throw error
             }
             else {
-                const modepreference = results.rows[0].preferences[0]
-                pool.query(`SELECT * FROM images`, (error, results) => {
-                    if (error){
-                        throw error
-                    }
-                    else {
-                        const imagesInDB = results.rows
-                        const templateVars = [ id, modepreference, imagesInDB ]
-                        res.render('./Templates/AdminDashboard/managesite.html.twig', { templateVars })
-                    }
-                })
+                res.redirect(302, 'managesite')
+            }
+        })
+    }
+}
+
+async function deleteFormule(req, res){
+    if (req.role == "ROLE_ADMIN"){
+        const { formule_id } = req.body
+        pool.query(`DELETE FROM menus WHERE formule_id = '${formule_id}'`, (error, results) => {
+            if (error){
+                throw error
+            }
+            else {
+                res.redirect(302, 'managesite')
+            }
+        })
+    }
+}
+
+async function addMenu(req, res){
+    if (req.role == "ROLE_ADMIN"){
+        const { type, title, description, price } = req.body
+        pool.query(`INSERT INTO menus (type, title, description, price) VALUES ('${type}', '${title}', '${description}', '${price}')`, (error, results) => {
+            if (error){
+                throw error
+            }
+            else {
+                res.redirect(302, 'managesite')
+            }
+        })
+    }
+}
+
+async function deleteMenu(req, res){
+    if (req.role == "ROLE_ADMIN"){
+        const { menu_id } = req.body
+        pool.query(`DELETE FROM menus WHERE menu_id = '${menu_id}'`, (error, results) => {
+            if (error){
+                throw error
+            }
+            else {
+                res.redirect(302, 'managesite')
             }
         })
     }
@@ -140,9 +170,7 @@ async function addMenu(req, res){
 // This function is used to set the image we want on the landing page of the site
 async function selectImage(req, res){
     if (req.role == "ROLE_ADMIN"){
-        const userToken = req.cookies.userToken.token
-        const id = req.email
-        const { selectImage1, selectImage2, selectImage3, selectImage4 } = req.body
+        const { selectImage } = req.body
         const { imageFullName } = req.body
         const imgName = path.parse(imageFullName).name
         const imgExt = path.parse(imageFullName).ext
@@ -153,67 +181,18 @@ async function selectImage(req, res){
                 throw error
             }
         })
-        if (selectImage1 == "true"){
-            fs.copyFile('./Public/Uploads/'+imgName+'.png', 'Public/Images/Homepage/1.png', (error) => {
-                if (error) {
-                    throw error
-                } 
-            fs.unlinkSync('./Public/Uploads/'+imgName+'.png')
-            })
-
-        }
-        if (selectImage2 == "true"){
-            fs.copyFile('./Public/Uploads/'+imgName+'.png', 'Public/Images/Homepage/2.png', (error) => {
-                if (error) {
-                    throw error
-                } 
-            fs.unlinkSync('./Public/Uploads/'+imgName+'.png')
-            })
-
-        }
-        if (selectImage3 == "true"){
-            fs.copyFile('./Public/Uploads/'+imgName+'.png', 'Public/Images/Homepage/3.png', (error) => {
-                if (error) {
-                    throw error
-                } 
-            fs.unlinkSync('./Public/Uploads/'+imgName+'.png')
-            })
-
-        }
-        if (selectImage4 == "true"){
-            fs.copyFile('./Public/Uploads/'+imgName+'.png', 'Public/Images/Homepage/4.png', (error) => {
-                if (error) {
-                    throw error
-                } 
-            fs.unlinkSync('./Public/Uploads/'+imgName+'.png')
-            })
-
-        }
-        pool.query(`SELECT preferences FROM users WHERE token = '${userToken}'`, (error, results) => {
-            if (error){
+        fs.copyFile('./Public/Uploads/'+imgName+'.png', 'Public/Images/Homepage/'+selectImage+'.png', (error) => {
+            if (error) {
                 throw error
-            }
-            else {
-                const modepreference = results.rows[0].preferences[0]
-                pool.query(`SELECT * FROM images`, (error, results) => {
-                    if (error){
-                        throw error
-                    }
-                    else {
-                        const imagesInDB = results.rows
-                        const templateVars = [ id, modepreference, imagesInDB ]
-                        res.render('./Templates/AdminDashboard/managesite.html.twig', { templateVars })
-                    }
-                })
-            }
+            } 
+        fs.unlinkSync('./Public/Uploads/'+imgName+'.png')
         })
+        res.redirect(302, 'managesite')
     }
 }
 
 async function uploadImage(req, res){
     if (req.role == "ROLE_ADMIN"){
-        const userToken = req.cookies.userToken.token
-        const id = req.email
         // Get the file that was set to our field named "image"
         const { image } = req.files;
         const { title } = req.body
@@ -243,24 +222,7 @@ async function uploadImage(req, res){
                                     throw error
                                 }
                                 else {
-                                    pool.query(`SELECT preferences FROM users WHERE token = '${userToken}'`, (error, results) => {
-                                        if (error){
-                                            throw error
-                                        }
-                                        else {
-                                            const modepreference = results.rows[0].preferences[0]
-                                            pool.query(`SELECT * FROM images`, (error, results) => {
-                                                if (error){
-                                                    throw error
-                                                }
-                                                else {
-                                                    const imagesInDB = results.rows
-                                                    const templateVars = [ id, modepreference, imagesInDB ]
-                                                    res.render('./Templates/AdminDashboard/managesite.html.twig', { templateVars })
-                                                }
-                                            })
-                                        }
-                                    })
+                                    res.redirect(302, 'managesite')
                                 }
                             })
                         }
@@ -276,8 +238,6 @@ async function uploadImage(req, res){
 
 async function deleteImage(req, res){
     if (req.role == "ROLE_ADMIN"){
-        const userToken = req.cookies.userToken.token
-        const id = req.email
         // If we send a post request for deleting an image
         const { name_image } = req.body
         pool.query(`DELETE FROM images WHERE name = '${name_image}'`, (error, results) => {
@@ -288,24 +248,7 @@ async function deleteImage(req, res){
                 // Delete the file from Uploads directory
                 const filePath = './Public/Uploads/'+name_image; 
                 fs.unlinkSync(filePath)
-                pool.query(`SELECT preferences FROM users WHERE token = '${userToken}'`, (error, results) => {
-                    if (error){
-                        throw error
-                    }
-                    else {
-                        const modepreference = results.rows[0].preferences[0]
-                        pool.query(`SELECT * FROM images`, (error, results) => {
-                            if (error){
-                                throw error
-                            }
-                            else {
-                                const imagesInDB = results.rows
-                                const templateVars = [ id, modepreference, imagesInDB ]
-                                res.render('./Templates/AdminDashboard/managesite.html.twig', { templateVars })
-                            }
-                        })
-                    }
-                })
+                res.redirect(302, 'managesite')
             }
         })
     }
@@ -330,9 +273,25 @@ async function redirectManageSite(req, res){
                         throw error
                     }
                     else {
-                        const imagesInDB = results.rows
-                        const templateVars = [ id, modepreference, imagesInDB ]
-                        res.render('./Templates/AdminDashboard/managesite.html.twig', { templateVars })
+                        const imagesInDB = results.rows 
+                        pool.query(`SELECT * FROM menus`, (error, results) => {
+                            if (error){
+                                throw error
+                            }
+                            else {
+                                const menusInDB = results.rows
+                                pool.query(`SELECT * FROM formules`, (error, results) => {
+                                    if (error){
+                                        throw error
+                                    }
+                                    else {
+                                        const formulesInDB = results.rows
+                                        const templateVars = [ id, modepreference, imagesInDB, menusInDB, formulesInDB ]
+                                        res.render('./Templates/AdminDashboard/managesite.html.twig', { templateVars })
+                                    }
+                                })
+                            }
+                        })
                     }
                 })
             }
@@ -344,4 +303,4 @@ async function redirectManageSite(req, res){
 }
 
 
-module.exports = { redirectDashboard, redirectShowUser, redirectLogs, redirectFormcontact, redirectManageSite, uploadImage, deleteImage, selectImage, addMenu }
+module.exports = { redirectDashboard, redirectShowUser, redirectLogs, redirectFormcontact, redirectManageSite, uploadImage, deleteImage, selectImage, addMenu, deleteMenu, addFormule, deleteFormule }

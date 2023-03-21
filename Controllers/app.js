@@ -30,62 +30,49 @@ async function redirectHomepage(req, res){
 }
 
 // Redirection to the contact page
-async function redirectContact(req, res){
-    const { sendContact, message, type } = req.body
-    if ( sendContact == "true" ){
-        const userToken = req.cookies.userToken.token
-        pool.query(`SELECT user_id FROM users WHERE token = '${userToken}'`, (error, results) => {
-            if (error){
-                throw error
-            }
-            else {
-                const user_id = results.rows[0].user_id
-                pool.query(`INSERT INTO contacts (user_id, type, message) VALUES ('${user_id}', '${type}', '${message}')`, (error, results) => {
-                    if (error){
-                        throw error
-                    }
-                    else {
-                        const userToken = req.cookies.userToken.token
-                        const id = req.email
-                        pool.query(`SELECT preferences FROM users WHERE token = '${userToken}'`, (error, results) => {
-                            if (error){
-                                throw error
-                            }
-                            else {
-                                // We send the preferences to the twig template 
-                                modepreference = results.rows[0].preferences[0]
-                                const role = req.role
-                                const formSend = "Votre formulaire a bien été pris en compte !"
-                                const templateVars = [id, modepreference, role, formSend]
-                                res.render('./Templates/contact.html.twig', { templateVars })
-                            }
-                        })
-                    }
-                })
-            }
-        })
-    }
-    else {
-        if (req.role == "ROLE_USER" || req.role == "ROLE_ADMIN"){
-            const userToken = req.cookies.userToken.token
-            const id = req.email
-            pool.query(`SELECT preferences FROM users WHERE token = '${userToken}'`, (error, results) => {
+// NEED TO BE UPDATED !!!
+async function sendFormContact(req, res){
+    const { message, type } = req.body
+    const userToken = req.cookies.userToken.token
+    pool.query(`SELECT user_id FROM users WHERE token = '${userToken}'`, (error, results) => {
+        if (error){
+            throw error
+        }
+        else {
+            console.log("send contact")
+            const user_id = results.rows[0].user_id
+            pool.query(`INSERT INTO contacts (user_id, type, message) VALUES ('${user_id}', '${type}', '${message}')`, (error, results) => {
                 if (error){
                     throw error
                 }
                 else {
-                    // We send the preferences to the twig template 
-                    modepreference = results.rows[0].preferences[0]
-                    const role = req.role
-                    const templateVars = [id, modepreference, role]
-                    res.render('./Templates/contact.html.twig', { templateVars })
+                    res.redirect(302, '/contact')
                 }
             })
         }
-        else {
-            const id = "unauthentificated"
-            res.render('./Templates/contact.html.twig', { id })
-        }
+    })
+}
+
+async function redirectContact(req, res){
+    if (req.role == "ROLE_USER" || req.role == "ROLE_ADMIN"){
+        const userToken = req.cookies.userToken.token
+        const id = req.email
+        pool.query(`SELECT preferences FROM users WHERE token = '${userToken}'`, (error, results) => {
+            if (error){
+                throw error
+            }
+            else {
+                // We send the preferences to the twig template 
+                modepreference = results.rows[0].preferences[0]
+                const role = req.role
+                const templateVars = [id, modepreference, role]
+                res.render('./Templates/contact.html.twig', { templateVars })
+            }
+        })
+    }
+    else {
+        const id = "unauthentificated"
+        res.render('./Templates/contact.html.twig', { id })
     }
 }
 
@@ -151,8 +138,16 @@ async function redirectMenu(req, res){
             else {
                 const role = req.role
                 modepreference = results.rows[0].preferences[0]
-                const templateVars = [id, modepreference, role]
-                res.render('./Templates/menu.html.twig', { templateVars })
+                pool.query(`SELECT * FROM menus`, (error, results) => {
+                    if (error){
+                        throw error
+                    }
+                    else {
+                        const menus = results.rows
+                        const templateVars = [id, modepreference, role, menus]
+                        res.render('./Templates/menu.html.twig', { templateVars })
+                    }
+                })
             }
         })
     }
@@ -185,4 +180,4 @@ async function redirectReservation(req, res){
 }
 
         // If we send a request for uploading an image
-module.exports = { redirectHomepage, redirectContact, redirectInformation, redirectSettings, redirectMenu, redirectReservation }
+module.exports = { redirectHomepage, redirectContact, sendFormContact, redirectInformation, redirectSettings, redirectMenu, redirectReservation }

@@ -12,7 +12,7 @@
             </h1>
             <ul class="nav nav-tabs justify-content-center">
               <li>
-                <button onclick="location.href = '/'" type="button" style="margin-right: 20px;" class="btn btn-outline-info">Application</button>
+                <button onclick="location.href = '/'" type="button" style="margin-right: 20px;" class="btn btn-outline-info">Acceuil Site</button>
               </li>
               <li>
                 <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" type="button" style="margin-left: 10px;" class="btn btn-outline-info">{{ templateVars[0] }}</button>
@@ -38,123 +38,148 @@
             </li>
           </ul>
 
-        <form action="/uploadImage" method="post" enctype="multipart/form-data">
-            <br>
-            <h3>Télécharger une image</h3>
-            <input type="hidden" class="form-control" id="uploadImage" name="uploadImage" value="true">
-            <input type="file" class="form-control" id="image" name="image" required>
-            <label for="title">Titre de l'image</label>
-            <input type="text" class="form-control" id="title" name="title" required>
-            <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Ajouter</button>
-        </form>
-
-        <br>
-
-        <!-- Upload an image -->
-        <h3>Liste d'images en base de données</h3>
-
-        <h4>Votre image ne doit pas comporter de caractères spéciaux! ( EX : _ / ' )</h4>
-        <div class="row" style="border: 5px solid black">
-        {% for image in templateVars[2] %}
-            <div class="col-xl-2 col-md-4 col-sm-6">
-                <li>
-                    {{ image.name }}
+          <div style="border: 5px solid black">
+            <div class="row justify-content-center">
+              <div class="col-10">
+                <form action="/uploadImage" method="post" enctype="multipart/form-data">
                     <br>
-                    {{ image.title }}
-                    <form action="/deleteImage" method="post" enctype="multipart/form-data">
-                        <input type="hidden" class="form-control" id="deleteImage" name="deleteImage" value="true">
-                        <input type="hidden" class="form-control" id="name_image" name="name_image" value="{{image.name}}">
-                        <img src="/Uploads/{{image.name}}" alt="name_image" style="height: 100px; width: 100px;" />
-                        <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Supprimer</button>
-                    </form>
-                </li>
-            </div>
-        {% endfor %}
-        </div>
-
-        <br>
-
-        <!-- Define an image for homepage -->
-        <div class="row justify-content-center" style="border: 5px solid black">
-            <h2>Image sur la page d'accueil</h2>
-            <div class="col-6">
-                <form action="/selectImage" method="post" enctype="multipart/form-data">
-                    <h3>Image du 1er plat</h3>
-                    <input type="hidden" class="form-control" id="selectImage1" name="selectImage1" value="true">
-                    <select class="form-control" id="imageFullName" name="imageFullName" required>
-                        {% for image in templateVars[2] %}
-                            <option value="{{image.name}}">{{image.name}}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Selectionner</button>
-                </form>
-
-                <form action="/selectImage" method="post" enctype="multipart/form-data">
-                    <h3>Image du 2eme plat</h3>
-                    <input type="hidden" class="form-control" id="selectImage" name="selectImage" value="true">
-                    <input type="hidden" class="form-control" id="selectImage2" name="selectImage2" value="true">
-                    <select class="form-control" id="imageFullName" name="imageFullName" required>
-                        {% for image in templateVars[2] %}
-                            <option value="{{image.name}}">{{image.name}}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Selectionner</button>
-                </form>
-
-                <form action="/selectImage" method="post" enctype="multipart/form-data">
-                    <h3>Image du 3eme plat</h3>
-                    <input type="hidden" class="form-control" id="selectImage" name="selectImage" value="true">
-                    <input type="hidden" class="form-control" id="selectImage3" name="selectImage3" value="true">
-                    <select class="form-control" id="imageFullName" name="imageFullName" required>
-                        {% for image in templateVars[2] %}
-                            <option value="{{image.name}}">{{image.name}}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Selectionner</button>
-                </form>
-
-                <form action="/selectImage" method="post" enctype="multipart/form-data">
-                    <h3>Image du 4eme plat</h3>
-                    <input type="hidden" class="form-control" id="selectImage" name="selectImage" value="true">
-                    <input type="hidden" class="form-control" id="selectImage4" name="selectImage4" value="true">
-                    <select class="form-control" id="imageFullName" name="imageFullName" required>
-                        {% for image in templateVars[2] %}
-                            <option value="{{image.name}}">{{image.name}}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Selectionner</button>
-                </form>
-            </div>
-        </div>
-
-
-        <!-- Management of menus --> 
-        
-        <div class="row justify-content-center" style="border: 5px solid black">
-            <h2>Gestion des plats à la carte</h2>
-            <div class="col-6">
-                <form action="/addMenu" method="post" enctype="multipart/form-data">
-                    <h3>Ajouter un plat</h3>
-                    <input type="hidden" class="form-control" id="addMenu" name="addMenu" value="true">
-                    <select class="form-control" id="type" name="type" required>
-                          <option value="entre">Entré</option>
-                          <option value="entre">Plat</option>
-                          <option value="entre">Dessert</option>
-                    </select>
-                    <br>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Titre de votre plat" required="true"/>
-                    <br>
-                    <textarea type="text" style="height:30vh;" class="form-control" id="description" name="description" placeholder="Description de votre plat" required="true"></textarea>
-                    <br>
-                    <input type="number" class="form-control" id="price" name="price" placeholder="Prix de votre plat" required="true"/>
-                    <br>
+                    <h3>Télécharger une image</h3>
+                    <input type="file" class="form-control" id="image" name="image" required>
+                    <label for="title">Titre de l'image</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
                     <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Ajouter</button>
                 </form>
+              </div>
+            </div>
+            <br>
+            <!-- Upload an image -->
+            <h3>Liste d'images en base de données</h3>
+
+            <h4>Votre image ne doit pas comporter de caractères spéciaux! ( EX : _ / ' )</h4>
+            {% for image in templateVars[2] %}
+              <li>
+                {{ image.name }}
+                <br>
+                {{ image.title }}
+                <form action="/deleteImage" method="post" enctype="multipart/form-data">
+                    <input type="hidden" class="form-control" id="name_image" name="name_image" value="{{image.name}}">
+                    <img src="/Uploads/{{image.name}}" alt="name_image" style="height: 100px; width: 100px;" />
+                    <button type="submit" class="btn btn-outline-warning" style="margin-left: 10px;">Supprimer</button>
+                </form>
+              </li>
+            {% endfor %}
+          </div>
+          <br>
+
+          <div style="border: 5px solid black">
+            <!-- Define an image for homepage -->
+            <div class="row justify-content-center">
+              <h2>Image sur la page d'accueil</h2>
+              <div class="col-6">
+                <form action="/selectImage" method="post" enctype="multipart/form-data">
+                  <select class="form-control" id="selectImage" name="selectImage" required>
+                    <option value="1">Image 1er</option>
+                    <option value="2">Image 2eme</option>
+                    <option value="3">Image 3eme</option>
+                    <option value="4">Image 4eme</option>
+                  </select>          
+                  <br>        
+                  <select class="form-control" id="imageFullName" name="imageFullName" required>
+                      {% for image in templateVars[2] %}
+                          <option value="{{image.name}}">{{image.name}}</option>
+                      {% endfor %}
+                  </select>
+                  <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Selectionner</button>
+                </form>
+              </div>
             </div>
           </div>
 
 
-        <!-- OffCanvas and hidden elements -->
+          <!-- Management of menus --> 
+          <div style="border: 5px solid black">
+            <div class="row justify-content-center">
+              <h2>Gestion des plats à la carte</h2>
+              <div class="col-6">
+                  <form action="/addMenu" method="post" enctype="multipart/form-data">
+                      <h3>Ajouter un plat</h3>
+                      <select class="form-control" id="type" name="type" required>
+                            <option value="entre">Entre</option>
+                            <option value="entre">Plat</option>
+                            <option value="entre">Dessert</option>
+                      </select>
+                      <br>
+                      <input type="text" class="form-control" id="title" name="title" placeholder="Titre de votre plat" required="true"/>
+                      <br>
+                      <textarea type="text" style="height:30vh;" class="form-control" id="description" name="description" placeholder="Description de votre plat" required="true"></textarea>
+                      <br>
+                      <input type="number" class="form-control" id="price" name="price" placeholder="Prix de votre plat" required="true"/>
+                      <br>
+                      <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Ajouter</button>
+                  </form>
+              </div>
+            </div>
+            {% for menu in templateVars[3] %}
+              <div style="border: 5px solid grey">
+                <li>
+                  {{ menu.type }}
+                  <br>
+                  {{ menu.title }}
+                  <br>
+                  {{ menu.description }}
+                  <br>
+                  {{ menu.price }}
+                  <form action="/deleteMenu" method="post" enctype="multipart/form-data">
+                      <input type="hidden" class="form-control" id="menu_id" name="menu_id" value="{{menu.menu_id}}">
+                      <button type="submit" class="btn btn-outline-warning" style="margin-left: 10px;">Supprimer</button>
+                  </form>
+                </li>
+              </div>
+            {% endfor %}
+          </div>
+          <br>
+
+          <!-- Management of formules -->
+
+            <div style="border: 5px solid black">
+            <div class="row justify-content-center">
+              <h2>Gestion des formules à la carte</h2>
+              <div class="col-6">
+                  <form action="/addFormule" method="post" enctype="multipart/form-data">
+                      <h3>Ajouter un menu</h3>
+                      <br>
+                      <input type="text" class="form-control" id="title" name="title" placeholder="Titre de votre menu EX : 'Formule diner'" required="true"/>
+                      <br>
+                      <input type="text" class="form-control" id="period" name="period" placeholder="Période de votre menu EX : 'Du lundi au vendredi midi'" required="true"/>
+                      <br>
+                      <textarea type="text" style="height:30vh;" class="form-control" id="description" name="description" placeholder="Description de votre menu EX : 'Entrée + plat ou plat + dessert'" required="true"></textarea>
+                      <br>
+                      <input type="float" class="form-control" id="price" name="price" placeholder="Prix de votre plat" required="true"/>
+                      <br>
+                      <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Ajouter</button>
+                  </form>
+              </div>
+            </div>
+            {% for formule in templateVars[4] %}
+              <div style="border: 5px solid grey">
+                <li>
+                  {{ formule.title }}
+                  <br>
+                  {{ formule.period }}
+                  <br>
+                  {{ formule.description }}
+                  <br>
+                  {{ formule.price }}
+                  <form action="/deleteFormule" method="post" enctype="multipart/form-data">
+                      <input type="hidden" class="form-control" id="formule_id" name="formule_id" value="{{formule.formule_id}}">
+                      <button type="submit" class="btn btn-outline-warning" style="margin-left: 10px;">Supprimer</button>
+                  </form>
+                </li>
+              </div>
+            {% endfor %}
+          </div>
+
+          <!-- OffCanvas and hidden elements -->
 
           <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
@@ -171,9 +196,9 @@
                 </div>
                 <div class="col-12">
                   <button onclick="location.href = '/userLogout'" style="margin-bottom: 10px;" type="button" class="btn btn-outline-warning">Déconnexion</button>
-                </div>
               </div>
             </div>
           </div>
+        </div>
   {% endblock %}
 </html>

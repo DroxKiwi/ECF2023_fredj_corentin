@@ -17,12 +17,12 @@ const contactsModel = fs.readFileSync('contacts.sql').toString()
 const logsModel = fs.readFileSync('logs.sql').toString()
 const imagesModel = fs.readFileSync('images.sql').toString()
 const menusModel = fs.readFileSync('menus.sql').toString()
+const formulesModel = fs.readFileSync('formules.sql').toString()
 
 // Execute the SQL commands in the database
 pool.query(usersModel, (err, result) => {
     if (err) throw err
     else {
-        console.log("betatestersModel imported")
         pool.query(contactsModel, (err, result) => {
             if (err) throw err
             else {
@@ -39,6 +39,13 @@ pool.query(usersModel, (err, result) => {
                                     if (err) throw err
                                     else {
                                         console.log("menusModel imported")
+                                        pool.query(formulesModel, (err, result) => {
+                                            if (err) throw err
+                                            else {
+                                                console.log("formulesModel imported")
+                                                console.log("All models are imported succesfuly !")
+                                            }
+                                        })
                                     }
                                 })
                             }

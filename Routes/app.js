@@ -1,4 +1,4 @@
-const { redirectHomepage, redirectContact, redirectInformation, redirectSettings, redirectMenu, redirectReservation } = require("../Controllers/app")
+const { redirectHomepage, redirectContact, sendFormContact, redirectInformation, redirectSettings, redirectMenu, redirectReservation } = require("../Controllers/app")
 
 function appRoute(app){
 
@@ -6,7 +6,7 @@ function appRoute(app){
     app.get('/', redirectHomepage)
 
     app.get('/contact', redirectContact)
-    app.post('/contact', redirectContact)
+    app.post('/contact', sendFormContact)
 
     // user settings redirection
     app.get('/information', redirectInformation)

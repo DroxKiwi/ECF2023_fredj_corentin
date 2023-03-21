@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS menus (
     type varchar(256) NOT NULL,
     title varchar(256) NOT NULL,
     description varchar(256) NOT NULL,
-    price int NOT NULL
+    price float NOT NULL
 )
