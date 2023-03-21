@@ -7,7 +7,6 @@ async function redirectHomepage(req, res){
     if (req.role == "ROLE_USER" || req.role == "ROLE_ADMIN"){
         const userToken = req.cookies.userToken.token
         const id = req.email
-        console.log(id)
         // We select into the database the preferences in link with the current user connected by checking the token
         pool.query(`SELECT preferences FROM users WHERE token = '${userToken}'`, (error, results) => {
             if (error){
@@ -15,7 +14,7 @@ async function redirectHomepage(req, res){
             }
             else {
                 // We send the preferences to the twig template 
-                modepreference = results.rows[0].preferences[0]
+                const modepreference = results.rows[0].preferences[0]
                 pool.query(`SELECT * FROM openhours`, (error, results) => {
                     if (error){
                         throw error
@@ -23,9 +22,17 @@ async function redirectHomepage(req, res){
                     else {
                         // We send the preferences to the twig template 
                         const openhours = results.rows
-                        const role = req.role
-                        const templateVars = [id, modepreference, role, openhours]
-                        res.render('./Templates/home.html.twig', { templateVars })
+                        pool.query(`SELECT * FROM images WHERE selectedfor = '1' OR selectedfor = '2' OR selectedfor = '3' OR selectedfor = '4'`, (error, results) => {
+                            if (error){
+                                throw error
+                            }
+                            else {
+                                const images = results.rows
+                                const role = req.role
+                                const templateVars = [id, modepreference, role, openhours, images]
+                                res.render('./Templates/home.html.twig', { templateVars })
+                            }
+                        })
                     }
                 })
             }
@@ -48,7 +55,6 @@ async function sendFormContact(req, res){
             throw error
         }
         else {
-            console.log("send contact")
             const user_id = results.rows[0].user_id
             pool.query(`INSERT INTO contacts (user_id, type, message) VALUES ('${user_id}', '${type}', '${message}')`, (error, results) => {
                 if (error){
@@ -72,10 +78,19 @@ async function redirectContact(req, res){
             }
             else {
                 // We send the preferences to the twig template 
-                modepreference = results.rows[0].preferences[0]
-                const role = req.role
-                const templateVars = [id, modepreference, role]
-                res.render('./Templates/contact.html.twig', { templateVars })
+                const modepreference = results.rows[0].preferences[0]
+                pool.query(`SELECT * FROM openhours`, (error, results) => {
+                    if (error){
+                        throw error
+                    }
+                    else {
+                        // We send the preferences to the twig template 
+                        const openhours = results.rows
+                        const role = req.role
+                        const templateVars = [id, modepreference, role, openhours]
+                        res.render('./Templates/contact.html.twig', { templateVars })
+                    }
+                })
             }
         })
     }
@@ -102,8 +117,17 @@ async function redirectInformation(req, res){
                     }
                     else {
                         const email = results.rows[0].email
-                        const templateVars = [id, modepreference, email]
-                        res.render('./Templates/information.html.twig', { templateVars })
+                        pool.query(`SELECT * FROM openhours`, (error, results) => {
+                            if (error){
+                                throw error
+                            }
+                            else {
+                                // We send the preferences to the twig template 
+                                const openhours = results.rows
+                                const templateVars = [id, modepreference, email, openhours]
+                                res.render('./Templates/information.html.twig', { templateVars })
+                            }
+                        })
                     }
                 })
             }
@@ -125,7 +149,7 @@ async function redirectSettings(req, res){
                 throw error
             }
             else {
-                modepreference = results.rows[0].preferences[0]
+                const modepreference = results.rows[0].preferences[0]
                 const templateVars = [id, modepreference]
                 res.render('./Templates/settings.html.twig', { templateVars })
             }
@@ -145,8 +169,8 @@ async function redirectMenu(req, res){
                 throw error
             }
             else {
+                const modepreference = results.rows[0].preferences[0]
                 const role = req.role
-                modepreference = results.rows[0].preferences[0]
                 pool.query(`SELECT * FROM menus`, (error, results) => {
                     if (error){
                         throw error
@@ -159,8 +183,17 @@ async function redirectMenu(req, res){
                             }
                             else {
                                 const formules = results.rows
-                                const templateVars = [id, modepreference, role, menus, formules]
-                                res.render('./Templates/menu.html.twig', { templateVars })
+                                pool.query(`SELECT * FROM openhours`, (error, results) => {
+                                    if (error){
+                                        throw error
+                                    }
+                                    else {
+                                        // We send the preferences to the twig template 
+                                        const openhours = results.rows
+                                        const templateVars = [id, modepreference, role, menus, formules, openhours]
+                                        res.render('./Templates/menu.html.twig', { templateVars })
+                                    }
+                                })
                             }
                         })
                     }
@@ -210,7 +243,6 @@ async function selectHourReservation(req, res){
         const userToken = req.cookies.userToken.token
         const id = req.email
         const { guests, dateres, hourres } = req.body
-        console.log(guests)
         var dateStr = dateres;
         var day = getDayName(dateStr, "fr-FR"); 
         pool.query(`SELECT maxguests FROM openhours WHERE day = '${day}'`, (error, results) => {
@@ -323,19 +355,26 @@ async function redirectReservation(req, res){
                 throw error
             }
             else {
-                const role = req.role
                 const modepreference = results.rows[0].preferences[0]
-                var dateObj = new Date()
-                console.log(dateObj)
-                var tabdate = []
-                tabdate[0] = dateObj.getUTCMonth()+1+'/'+(dateObj.getUTCDate())+'/'+(dateObj.getUTCFullYear())
-                for (let i = 1; i < 14; i++){
-                    dateObj.setDate(dateObj.getDate()+1);
-                    tabdate[i] = dateObj.getUTCMonth()+1+'/'+(dateObj.getUTCDate())+'/'+(dateObj.getUTCFullYear())
-                }
-                const stage = "selectday"
-                const templateVars = [id, modepreference, role, tabdate, stage]
-                res.render('./Templates/reservation.html.twig', { templateVars })
+                pool.query(`SELECT * FROM openhours`, (error, results) => {
+                    if (error){
+                        throw error
+                    }
+                    else {
+                        const openhour = results.rows
+                        const role = req.role
+                        var dateObj = new Date()
+                        var tabdate = []
+                        tabdate[0] = dateObj.getUTCMonth()+1+'/'+(dateObj.getUTCDate())+'/'+(dateObj.getUTCFullYear())
+                        for (let i = 1; i < 14; i++){
+                            dateObj.setDate(dateObj.getDate()+1);
+                            tabdate[i] = dateObj.getUTCMonth()+1+'/'+(dateObj.getUTCDate())+'/'+(dateObj.getUTCFullYear())
+                        }
+                        const stage = "selectday"
+                        const templateVars = [id, modepreference, role, tabdate, stage, openhour]
+                        res.render('./Templates/reservation.html.twig', { templateVars })
+                    }
+                })
             }
         })
     }

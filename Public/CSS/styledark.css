@@ -1,6 +1,17 @@
 body {
-  background-color: rgb(68, 68, 68);
-  color: white;
+  background-color: #444444;
+  color: #ffffff;
+  font: 1.2em "Timmana", serif;
+}
+
+table, th, td, tr {
+  border: 1px solid black;
+  background-color: rgb(166, 176, 240) !important;
+  color: rgb(48, 48, 48);
+}
+
+.userselect:hover {
+  background-color: rgb(162, 192, 162) !important;
 }
 
 html, body {
@@ -10,18 +21,16 @@ html, body {
   margin: 0;
 }
 
-.colortest1 {
-  background-color: red;
+h1 {
+  font-family: "Geo", sans-serif;
 }
 
-table, th, td, tr {
-  border: 1px solid white;
-  background-color: rgb(60, 66, 104) !important;
-  color: white;
+p {
+  font-family: "Ultra", sans-serif;
 }
 
-.userselect:hover {
-  background-color: rgb(53, 88, 53) !important;
+a {
+  color: #8f8829 !important;
 }
 
 .footer {
@@ -32,4 +41,14 @@ table, th, td, tr {
   bottom: 0;
   left: 0;
   opacity: 70%;
+} 
+.imgHome {
+  border-radius: 50px;
+  height: 50vh;
+  margin: 20px;
+  box-shadow: 7px 3px 3px black;
+}
+
+.imgHome:hover {
+  box-shadow: 10px 5px 5px black;
 }/*# sourceMappingURL=styledark.css.map */

@@ -8,12 +8,17 @@
 
         <div class="container-fluid text-center">
           <header>
-            <h1>
-              Bienvenu sur l'application !
-            </h1>
+      <h1>
+        Quai Antique
+      </h1>
             <ul class="nav nav-tabs justify-content-center">
+              <li>
+                {% if templateVars[2] == "ROLE_ADMIN" %}
+                  <button onclick="location.href = '/dashboard'" type="button" style="margin-right: 20px;" class="btn btn-outline-info">Tableau de bord</button>
+                {% endif %}
+              </li>
               <li class="nav-item">
-                <a class="nav-link" href="/">App</a>
+                <a class="nav-link" href="/">Accueil</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/menu">La Carte</a>
@@ -24,9 +29,15 @@
               <li class="nav-item">
                 <a class="nav-link" href="/contact">Nous Contacter</a>
               </li>
-              <li>
-                <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" type="button" style="margin-left: 10px;" class="btn btn-outline-info">{{ templateVars[0] }}</button>
-              </li>
+              {% if modepreference == "darkmode" %}
+                <li>
+                  <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" type="button" style="margin-left: 10px;" class="btn btn-outline-light">{{ templateVars[0] }}</button>
+                </li>
+              {% else %}
+                <li>
+                  <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" type="button" style="margin-left: 10px;" class="btn btn-outline-secondary">{{ templateVars[0] }}</button>
+                </li>
+              {% endif %}
             </ul>
           </header>
           <h2>
@@ -141,7 +152,7 @@
                   <button type="button" onclick="location.href = '/settings'" style="margin-bottom: 10px;" class="btn btn-outline-secondary">Préferences de compte</button>
                 </div>
                 <div class="col-12">
-                  <button onclick="location.href = '/userLogout'" style="margin-bottom: 10px;" type="button" class="btn btn-outline-warning">Déconnexion</button>
+                  <button onclick="location.href = '/userLogout'" style="margin-bottom: 10px;" type="button" class="btn btn-outline-secondary">Déconnexion</button>
                 </div>
               </div>
             </div>

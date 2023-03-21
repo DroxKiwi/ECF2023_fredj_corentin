@@ -266,8 +266,7 @@ async function deleteMenu(req, res){
 // This function is used to set the image we want on the landing page of the site
 async function selectImage(req, res){
     if (req.role == "ROLE_ADMIN"){
-        const { selectImage } = req.body
-        const { imageFullName } = req.body
+        const { selectImage, imageFullName, description } = req.body
         const imgName = path.parse(imageFullName).name
         const imgExt = path.parse(imageFullName).ext
         const tmp_path = './Public/Uploads/'+imageFullName
@@ -282,6 +281,14 @@ async function selectImage(req, res){
                 throw error
             } 
         fs.unlinkSync('./Public/Uploads/'+imgName+'.png')
+        })
+        pool.query(`UPDATE images SET selectedfor = '${selectImage}', description = '${description}' WHERE name = '${imageFullName}'`, (error, results) => {
+            if (error){
+                throw error
+            }
+            else {
+                res.redirect(302, '/managesite')
+            }
         })
     }
     else {

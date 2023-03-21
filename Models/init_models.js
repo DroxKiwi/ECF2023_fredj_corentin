@@ -25,6 +25,7 @@ const reservationsModel = fs.readFileSync('reservations.sql').toString()
 pool.query(usersModel, (err, result) => {
     if (err) throw err
     else {
+        console.log("userModel imported")
         pool.query(contactsModel, (err, result) => {
             if (err) throw err
             else {

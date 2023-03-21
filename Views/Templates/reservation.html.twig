@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% set modepreference = templateVars[1] %}
+{% set openhours = templateVars[5] %}
 
 <!DOCTYPE html>
 
@@ -7,9 +8,9 @@
   {% block content %}
         <div class="container-fluid text-center">
           <header>
-            <h1>
-              Bienvenu sur l'application !
-            </h1>
+      <h1>
+        Quai Antique
+      </h1>
             <ul class="nav nav-tabs justify-content-center">
               <li>
                 {% if templateVars[2] == "ROLE_ADMIN" %}
@@ -28,18 +29,33 @@
               <li class="nav-item">
                 <a class="nav-link" href="/contact">Nous Contacter</a>
               </li>
-            {% if id == "unauthentificated" %}
-              <li>
-                <button onclick="location.href = '/userLogin'" type="button" style="margin-left: 10px;" class="btn btn-outline-success">Connexion</button>
-              </li>
-              <li>
-                <button onclick="location.href = '/userCreate'" type="button" style="margin-left: 10px;" class="btn btn-outline-primary">Créer un compte</button>
-              </li>
-            {% else %}
-              <li>
-                <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" type="button" style="margin-left: 10px;" class="btn btn-outline-info">{{ templateVars[0] }}</button>
-              </li>
-            {% endif %}
+              {% if id == "unauthentificated" %}
+                {% if modepreference == "darkmode" %}
+                  <li>
+                    <button onclick="location.href = '/userLogin'" type="button" style="margin-left: 10px;" class="btn btn-outline-light">Connexion</button>
+                  </li>
+                  <li>
+                    <button onclick="location.href = '/userCreate'" type="button" style="margin-left: 10px;" class="btn btn-outline-light">Créer un compte</button>
+                  </li>
+                {% else %}
+                  <li>
+                    <button onclick="location.href = '/userLogin'" type="button" style="margin-left: 10px;" class="btn btn-outline-secondary">Connexion</button>
+                  </li>
+                  <li>
+                    <button onclick="location.href = '/userCreate'" type="button" style="margin-left: 10px;" class="btn btn-outline-secondary">Créer un compte</button>
+                  </li>
+                {% endif %}
+              {% else %}
+                {% if modepreference == "darkmode" %}
+                  <li>
+                    <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" type="button" style="margin-left: 10px;" class="btn btn-outline-light">{{ templateVars[0] }}</button>
+                  </li>
+                {% else %}
+                  <li>
+                    <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" type="button" style="margin-left: 10px;" class="btn btn-outline-secondary">{{ templateVars[0] }}</button>
+                  </li>
+                {% endif %}
+              {% endif %}
             </ul>
           </header>
           <br>
@@ -80,7 +96,7 @@
                       <label style="border:2px solid black;"><input type="radio" value={{ date }} name="dateres" required="true"/>{{ date }}</label>
                     {% endfor %}
                     <label>Date</label>
-                    <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Suivant</button>
+                    <button type="submit" class="btn btn-outline-light" style="margin-left: 10px;">Suivant</button>
                   </form>
                 {% elseif templateVars[4] == "selecthour" %}
                   <p>recapitulatif de la réservation : </p>
@@ -97,7 +113,7 @@
                     </select>
                     <input type="hidden" id="guests" name="guests" value='{{templateVars[5]}}'/>
                     <input type="hidden" id="dateres" name="dateres" value='{{templateVars[6]}}'/>
-                    <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Suivant</button>
+                    <button type="submit" class="btn btn-outline-light" style="margin-left: 10px;">Suivant</button>
                   </form>
                 {% elseif templateVars[4] == "validationres" %}
                   <p>recapitulatif de la réservation : </p>
@@ -113,7 +129,7 @@
                     <input type="hidden" id="dateres" name="dateres" value='{{templateVars[6]}}'/>
                     <input type="hidden" id="hourres" name="hourres" value='{{templateVars[3]}}'/>
                     <textarea type="text" style="height:10vh;" class="form-control" id="allergy" name="allergy" placeholder="Renseigner vos allergies si nécessaire"></textarea>
-                    <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Réserver</button>
+                    <button type="submit" class="btn btn-outline-light" style="margin-left: 10px;">Réserver</button>
                   </form>
                 {% elseif templateVars[4] == "recapresvalidated" %}
                   <p>recapitulatif de la réservation : </p>
@@ -146,7 +162,7 @@
                   <button type="button" onclick="location.href = '/settings'" style="margin-bottom: 10px;" class="btn btn-outline-secondary">Préferences de compte</button>
                 </div>
                 <div class="col-12">
-                  <button onclick="location.href = '/userLogout'" style="margin-bottom: 10px;" type="button" class="btn btn-outline-warning">Déconnexion</button>
+                  <button onclick="location.href = '/userLogout'" style="margin-bottom: 10px;" type="button" class="btn btn-outline-secondary">Déconnexion</button>
                 </div>
               </div>
             </div>
