@@ -1,4 +1,4 @@
-const { redirectHomepage, redirectContact, sendFormContact, redirectInformation, redirectSettings, redirectMenu, redirectReservation, selectHourReservation } = require("../Controllers/app")
+const { redirectHomepage, redirectContact, sendFormContact, redirectInformation, redirectSettings, redirectMenu, redirectReservation, selectDayReservation, selectHourReservation, valideReservation } = require("../Controllers/app")
 
 function appRoute(app){
 
@@ -19,8 +19,9 @@ function appRoute(app){
 
     // Redirect to the reservation page
     app.get('/reservation', redirectReservation)
+    app.post('/selectDayReservation', selectDayReservation)
     app.post('/selectHourReservation', selectHourReservation)
-
+    app.post('/valideReservation', valideReservation)
 }
 
 module.exports = appRoute

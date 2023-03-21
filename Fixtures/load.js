@@ -22,14 +22,14 @@ function fixtureLoad(){
             throw error
         }
         else {
-            pool.query(`INSERT INTO openhours (day, state, openhour, closehour) VALUES
-                ('lundi', 'fermé', '0', '0'),
-                ('mardi', 'fermé', '0', '0'),
-                ('mercredi', 'fermé', '0', '0'),
-                ('jeudi', 'fermé', '0', '0'),
-                ('vendredi', 'fermé', '0', '0'),
-                ('samedi', 'fermé', '0', '0'),
-                ('dimanche', 'fermé', '0', '0')
+            pool.query(`INSERT INTO openhours (day, state, maxguests, openhour, closehour) VALUES
+                ('lundi', 'fermé', '30', '0', '0'),
+                ('mardi', 'ouvert', '30', '11', '14'),
+                ('mercredi', 'ouvert', '30', '11', '14'),
+                ('jeudi', 'ouvert', '30', '11', '14'),
+                ('vendredi', 'ouvert', '30', '11', '14'),
+                ('samedi', 'ouvert', '30', '19', '22'),
+                ('dimanche', 'fermé', '30', '0', '0')
                 `, (error, results) => {
                 if (error){
                     throw error

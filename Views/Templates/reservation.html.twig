@@ -43,10 +43,15 @@
             </ul>
           </header>
           <br>
-          <h2>
-            Réservez une table !
-          </h2>
-
+          {% if templateVars[4] != "recapresvalidated" %}
+            <h2>
+              Réservez une table !
+            </h2>
+          {% else %}
+            <h2>
+              Table réservée ! A très vite et merci
+            </h2>
+          {% endif %}
 
           <div class="row">
             <div class="col">
@@ -54,7 +59,7 @@
                 <h3>Vous devez créer un compte ou vous connecter pour réserver un table !</h3>
               {% else %}
                 {% if templateVars[4] == "selectday" %}
-                  <form action="/selectHourReservation" method="post">
+                  <form action="/selectDayReservation" method="post">
                     <br>
                     <select id="guests" name="guests" required>
                       <option value="1">1</option>
@@ -72,7 +77,7 @@
                     </select>              
                     <label>nombre de personnes</label>
                     {% for date in templateVars[3] %}
-                      <label style="border:2px solid black;"><input type="radio" value={{ date }} name="dateres"/>{{ date }}</label>
+                      <label style="border:2px solid black;"><input type="radio" value={{ date }} name="dateres" required="true"/>{{ date }}</label>
                     {% endfor %}
                     <label>Date</label>
                     <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Suivant</button>
@@ -83,21 +88,44 @@
                   pour : {{templateVars[5]}} personnes
                   <br>
                   pour le : {{templateVars[6]}}
-                  <form action="/nextFormReservation" method="post">
+                  <form action="/selectHourReservation" method="post">
                     <label>Choisissez une heure</label>
-                    <select id="guests" name="guests" required>
+                    <select id="hourres" name="hourres" required>
                       {% for hour in templateVars[3] %}
-                        <option value={{hour}}>{{hour}}h</option>
+                        <option value='{{hour}}'>{{hour}}h</option>
                       {% endfor %}
                     </select>
-                    <input type="hidden" id="guests" name="guests" value={{templateVars[5]}}/>
-                    <input type="hidden" id="dateres" name="dateres" value={{templateVars[6]}}/>
+                    <input type="hidden" id="guests" name="guests" value='{{templateVars[5]}}'/>
+                    <input type="hidden" id="dateres" name="dateres" value='{{templateVars[6]}}'/>
                     <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Suivant</button>
                   </form>
+                {% elseif templateVars[4] == "validationres" %}
+                  <p>recapitulatif de la réservation : </p>
+                  <br>
+                  pour : {{templateVars[5]}} personnes
+                  <br>
+                  pour le : {{templateVars[6]}}
+                  <br>
+                  à : {{templateVars[3]}}h
+                  <form action="/valideReservation" method="post">
+                    <label>Valider la réservation ?</label>
+                    <input type="hidden" id="guests" name="guests" value='{{templateVars[5]}}'/>
+                    <input type="hidden" id="dateres" name="dateres" value='{{templateVars[6]}}'/>
+                    <input type="hidden" id="hourres" name="hourres" value='{{templateVars[3]}}'/>
+                    <textarea type="text" style="height:10vh;" class="form-control" id="allergy" name="allergy" placeholder="Renseigner vos allergies si nécessaire"></textarea>
+                    <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Réserver</button>
+                  </form>
+                {% elseif templateVars[4] == "recapresvalidated" %}
+                  <p>recapitulatif de la réservation : </p>
+                  <br>
+                  pour : {{templateVars[5]}} personnes
+                  <br>
+                  pour le : {{templateVars[6]}}
+                  <br>
+                  à : {{templateVars[3]}}h
+                  <br>
+                  allergies : {{templateVars[7]}}
                 {% endif %}
-              {% endif %}
-              {% if hourselect == "false" %}
-                zfieho
               {% endif %}
             </div>
           </div>

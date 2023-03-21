@@ -2,6 +2,7 @@ const pool = require('../Utils/db');
 var fs = require('fs');
 const path = require('path');
 const easyimg = require('easyimage');
+const { resetPassword } = require('./user');
 
 async function redirectDashboard(req, res){
     if (req.role == "ROLE_ADMIN"){
@@ -12,9 +13,54 @@ async function redirectDashboard(req, res){
     }
 }
 
-async function redirectShowUser(req, res){
-    const { user_id } = req.body
+async function deleteReservation(req, res){
     if (req.role == "ROLE_ADMIN"){
+        const { reservation_id } = req.body
+        pool.query(`DELETE FROM reservations WHERE reservation_id = '${reservation_id}'`, (error, results) => {
+            if (error){
+                throw error
+            }
+            else {
+                res.redirect(302, "/showReservations")
+            }
+        })
+    }
+    else {
+        res.redirect(302, '/')
+    }
+}
+
+async function redirectShowReservations(req, res){
+    if (req.role == "ROLE_ADMIN"){
+        const userToken = req.cookies.userToken.token
+        const id = req.email
+        pool.query(`SELECT preferences FROM users WHERE token = '${userToken}'`, (error, results) => {
+            if (error){
+                throw error
+            }
+            else {
+                const modepreference = results.rows[0].preferences[0]
+                pool.query(`SELECT * FROM reservations`, (error, results) => {
+                    if (error){
+                        throw error
+                    }
+                    else {
+                        const reservations = results.rows
+                        const templateVars = [ id, modepreference, reservations ]
+                        res.render('./Templates/AdminDashboard/reservationshow.html.twig', { templateVars })
+                    }
+                })
+            }
+        })
+    }
+    else {
+        res.redirect(302, '/')
+    }
+}
+
+async function redirectShowUser(req, res){
+    if (req.role == "ROLE_ADMIN"){
+        const { user_id } = req.body
         const userToken = req.cookies.userToken.token
         const id = req.email
         // We select into the database the preferences in link with the current user connected by checking the token
@@ -363,4 +409,4 @@ async function redirectManageSite(req, res){
 }
 
 
-module.exports = { redirectDashboard, redirectShowUser, redirectLogs, redirectFormcontact, redirectManageSite, uploadImage, deleteImage, selectImage, addMenu, deleteMenu, addFormule, deleteFormule, addOpenHours, deleteOpenHours }
+module.exports = { redirectDashboard, redirectShowUser, redirectLogs, redirectFormcontact, redirectManageSite, uploadImage, deleteImage, selectImage, addMenu, deleteMenu, addFormule, deleteFormule, addOpenHours, deleteOpenHours, redirectShowReservations, deleteReservation }

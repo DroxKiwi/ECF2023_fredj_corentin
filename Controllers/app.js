@@ -174,13 +174,100 @@ async function redirectMenu(req, res){
     }
 }
 
+async function valideReservation(req, res){
+    if (req.role == "ROLE_USER" || req.role == "ROLE_ADMIN"){
+        const userToken = req.cookies.userToken.token
+        const id = req.email
+        const { guests, dateres, hourres, allergy } = req.body
+        pool.query(`INSERT INTO reservations (email, guests, dateres, hourres, allergy) VALUES ('${id}', '${guests}', '${dateres}', '${hourres}', '${allergy}')`, (error, results) => {
+            if (error){
+                throw error
+            }
+            else{
+                pool.query(`SELECT preferences FROM users WHERE token = '${userToken}'`, (error, results) => {
+                    if (error){
+                        throw error
+                    }
+                    else {
+                        const role = req.role
+                        const modepreference = results.rows[0].preferences[0]
+                        const stage = "recapresvalidated"
+                        const templateVars = [id, modepreference, role, hourres, stage, guests, dateres, allergy]
+                        res.render('./Templates/reservation.html.twig', { templateVars })
+                    }
+                })
+            }
+        })
+    }
+    else {
+        const id = "unauthentificated"
+        res.render('./Templates/reservation.html.twig', { id })
+    }
+}
+
+async function selectHourReservation(req, res){
+    if (req.role == "ROLE_USER" || req.role == "ROLE_ADMIN"){
+        const userToken = req.cookies.userToken.token
+        const id = req.email
+        const { guests, dateres, hourres } = req.body
+        console.log(guests)
+        var dateStr = dateres;
+        var day = getDayName(dateStr, "fr-FR"); 
+        pool.query(`SELECT maxguests FROM openhours WHERE day = '${day}'`, (error, results) => {
+            if (error){
+                throw error
+            }
+            else {
+                const maxguests = results.rows[0].maxguests
+                pool.query(`SELECT guests FROM reservations WHERE dateres = '${dateres}'`, (error, results) => {
+                    if (error){
+                        throw error
+                    }
+                    else {
+                        var actualNumberGuests = 0
+                        for (let i = 0; i < results.rows.length; i++){
+                            actualNumberGuests += results.rows[i].guests
+                        }
+                        if (actualNumberGuests > maxguests){
+                            res.send("Cette heure n'est plus diponible veuillez en choisir une autre")
+                        }
+                        if ((actualNumberGuests+guests) > maxguests){
+                            res.send("Il reste des places mais vous être trop nombreux, veuillez choisir un autre horaire")
+                        }
+                        else {
+                            pool.query(`SELECT preferences FROM users WHERE token = '${userToken}'`, (error, results) => {
+                                if (error){
+                                    throw error
+                                }
+                                else {
+                                    const role = req.role
+                                    const modepreference = results.rows[0].preferences[0]
+                                    const stage = "validationres"
+                                    const templateVars = [id, modepreference, role, hourres, stage, guests, dateres]
+                                    res.render('./Templates/reservation.html.twig', { templateVars })
+                                }
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    }
+    else {
+        const id = "unauthentificated"
+        res.render('./Templates/reservation.html.twig', { id })
+    }
+}
+
+
+// By this function i can extract the day in string type and compare it in database
 function getDayName(dateStr, locale)
 {
     var date = new Date(dateStr);
     return date.toLocaleDateString(locale, { weekday: 'long' });        
 }
 
-async function selectHourReservation(req, res){
+async function selectDayReservation(req, res){
     if (req.role == "ROLE_USER" || req.role == "ROLE_ADMIN"){
         const userToken = req.cookies.userToken.token
         const id = req.email
@@ -192,29 +279,32 @@ async function selectHourReservation(req, res){
                 throw error
             }
             else {
+                const openhour = results.rows[0].openhour
+                const closehour = results.rows[0].closehour
                 const state = results.rows[0].state
+                const tabhour = []
+                tabhour[0] = openhour
+                // Here we get < closehour ! make it 1 hour before closing
+                for (let i = 1; i < closehour-openhour; i++){
+                    tabhour[i] = openhour+i
+                }
                 if (state == "ouvert"){
-                    const openhour = results.rows[0].openhour
-                    const closehour = results.rows[0].closehour
                     pool.query(`SELECT preferences FROM users WHERE token = '${userToken}'`, (error, results) => {
                         if (error){
                             throw error
                         }
                         else {
+                            const stage = "selecthour"
                             const role = req.role
                             const modepreference = results.rows[0].preferences[0]
-                            const tabhour = []
-                            tabhour[0] = openhour
-                            // Here we get < closehour ! make it 1 hour before closing
-                            for (let i = 1; i < closehour-openhour; i++){
-                                tabhour[i] = openhour+i
-                            }
-                            const stage = "selecthour"
                             const templateVars = [id, modepreference, role, tabhour, stage, guests, dateres]
                             res.render('./Templates/reservation.html.twig', { templateVars })
                         }
                     })
-                } 
+                }
+                else{
+                    res.send("Nous somme fermé ce jour là, veuillez en choisir un autre")
+                }
             }
         })
     }
@@ -256,4 +346,4 @@ async function redirectReservation(req, res){
 }
 
         // If we send a request for uploading an image
-module.exports = { redirectHomepage, redirectContact, sendFormContact, redirectInformation, redirectSettings, redirectMenu, redirectReservation, selectHourReservation }
+module.exports = { redirectHomepage, redirectContact, sendFormContact, redirectInformation, redirectSettings, redirectMenu, redirectReservation, selectDayReservation, selectHourReservation, valideReservation }

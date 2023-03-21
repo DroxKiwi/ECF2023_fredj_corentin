@@ -21,7 +21,7 @@
             </ul>
           </header>
           <h2>
-            Historique de logs
+            Réservations
           </h2>
 
 
@@ -33,35 +33,48 @@
               <a class="nav-link" href="/logs">Logs</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/formcontact">formulaire de contacts</a>
+              <a class="nav-link" href="/formcontact">formulaire de contacts</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/managesite">Gestion du site</a>
             </li>
-            <li>
-              <a class="nav-link" href="/showReservations">Gestion des réservations</a>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Gestion des réservations</a>
             </li>
           </ul>
 
           <table class="table">
             <thead>
               <tr>
-                  formulaires de contact :
+                <th scope="col">id en BDD :</th>
+                <th scope="col">email utilisateur :</th>
+                <th scope="col">nombre de convives :</th>
+                <th scope="col">date :</th>
+                <th scope="col">heure de réservation :</th>
+                <th scope="col">allergies :</th>
+                <th scope="col"></th>
               </tr>
             </thead>
+
             <tbody>
-                {% for forms in templateVars[2] %}
+              {% for reservation in templateVars[2] %}
                 <tr>
+                  <td>{{ reservation.reservation_id }}</td>
+                  <td>{{ reservation.email }}</td>
+                  <td>{{ reservation.guests }}</td>
+                  <td>{{ reservation.dateres }}</td>
+                  <td>{{ reservation.hourres }}</td>
+                  <td>{{ reservation.allergy }}</td>
                   <td>
-                  {% for form in forms %}
-                    <td>
-                      {{ form }}
-                    </td>
-                  {% endfor %}
+                    <form action="/deleteReservation" method="post"> 
+                      <input type="hidden" class="form-control" id="reservation_id" name="reservation_id" value="{{ reservation.reservation_id }}">
+                      <button type="submit" class="btn btn-outline-info"><img src="/Icones/delete.png" alt="Plus" title="Supprimer la réservation" height="25px" width="25px"></button>
+                    </form>
                   </td>
                 </tr>
-                {% endfor %}
+              {% endfor %}
             </tbody>
+          </table>
 
         <!-- OffCanvas and hidden elements -->
 
