@@ -28,13 +28,29 @@
 
     {% block content %}{% endblock %}
 
-    <div class="row footer">
-        {% block footer %}
-            <div class="col">
-                efoznzkjf
+    {% block footer %}
+    <div class="row justify-content-center">
+        <div class="col footer">
+            <div class="row justify-content-around">
+                {% for openhour in openhours %}
+                    <div class="col-2">
+                        <li>
+                            {{ openhour.day }}
+                            {{ openhour.state }}
+                            {% if openhour.state == "ouvert" %}
+                            de
+                            {{ openhour.openhour }}
+                            h à 
+                            {{ openhour.closehour }}
+                            h
+                            {% endif %}
+                        </li>
+                    </div>
+                {% endfor %}
             </div>
-        {% endblock %}
+        </div>
     </div>
+    {% endblock %}
 
     {% block javascripts %}
         <!-- Optional JavaScript -->

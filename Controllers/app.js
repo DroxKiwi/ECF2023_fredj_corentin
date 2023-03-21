@@ -16,9 +16,18 @@ async function redirectHomepage(req, res){
             else {
                 // We send the preferences to the twig template 
                 modepreference = results.rows[0].preferences[0]
-                const role = req.role
-                const templateVars = [id, modepreference, role]
-                res.render('./Templates/home.html.twig', { templateVars })
+                pool.query(`SELECT * FROM openhours`, (error, results) => {
+                    if (error){
+                        throw error
+                    }
+                    else {
+                        // We send the preferences to the twig template 
+                        const openhours = results.rows
+                        const role = req.role
+                        const templateVars = [id, modepreference, role, openhours]
+                        res.render('./Templates/home.html.twig', { templateVars })
+                    }
+                })
             }
         })
     }

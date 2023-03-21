@@ -122,7 +122,7 @@ async function addOpenHours(req, res){
                     throw error
                 }
                 else {
-                    res.redirect(302, 'managesite')
+                    res.redirect(302, '/managesite')
                 }
             })
         }
@@ -140,7 +140,7 @@ async function deleteOpenHours(req, res){
                 throw error
             }
             else {
-                res.redirect(302, 'managesite')
+                res.redirect(302, '/managesite')
             }
         })
     }
@@ -157,7 +157,7 @@ async function addFormule(req, res){
                 throw error
             }
             else {
-                res.redirect(302, 'managesite')
+                res.redirect(302, '/managesite')
             }
         })
     }
@@ -174,7 +174,7 @@ async function deleteFormule(req, res){
                 throw error
             }
             else {
-                res.redirect(302, 'managesite')
+                res.redirect(302, '/managesite')
             }
         })
     }
@@ -191,7 +191,7 @@ async function addMenu(req, res){
                 throw error
             }
             else {
-                res.redirect(302, 'managesite')
+                res.redirect(302, '/managesite')
             }
         })
     }
@@ -208,7 +208,7 @@ async function deleteMenu(req, res){
                 throw error
             }
             else {
-                res.redirect(302, 'managesite')
+                res.redirect(302, '/managesite')
             }
         })
     }
@@ -274,7 +274,7 @@ async function uploadImage(req, res){
                                     throw error
                                 }
                                 else {
-                                    res.redirect(302, 'managesite')
+                                    res.redirect(302, '/managesite')
                                 }
                             })
                         }
@@ -300,7 +300,7 @@ async function deleteImage(req, res){
                 // Delete the file from Uploads directory
                 const filePath = './Public/Uploads/'+name_image; 
                 fs.unlinkSync(filePath)
-                res.redirect(302, 'managesite')
+                res.redirect(302, '/managesite')
             }
         })
     }

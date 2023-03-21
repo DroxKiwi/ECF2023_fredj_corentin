@@ -3,6 +3,13 @@ body{
     color: white;
 }
 
+html, body {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
 .colortest1{
     background-color: red;
 }
@@ -18,8 +25,11 @@ table, th, td, tr {
 }
 
 .footer{
-    background-color: black;
-    height: 200vh;
-    width: auto;
-    position: fixed;
+    color:black;
+    background-color: grey;
+    height: 10vh;
+    position:fixed;
+    bottom:0;
+    left:0;
+    opacity: 70%;
 }
