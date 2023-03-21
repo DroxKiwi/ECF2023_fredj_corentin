@@ -9,7 +9,7 @@ const fileUpload = require('express-fileupload');
 // IF USING NPM !
 // const port = process.env.PORT
 //IF USING NODEMON !
-const port = 3000
+const port = process.env.PORT || 3000
 
 //console.log(`Ready on ${process.env.NODE_ENV} mode`)
 //console.log(`Port listening on ${process.env.PORT}`)
