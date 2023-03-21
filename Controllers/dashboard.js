@@ -111,9 +111,15 @@ async function redirectFormcontact(req, res){
     }
 }
 
+async function setOpenHours(req, res){
+    if (req.role == "ROLE_ADMIN"){
+
+    }
+}
+
 async function addFormule(req, res){
     if (req.role == "ROLE_ADMIN"){
-        const { title, description, price } = req.body
+        const { title, period, description, price } = req.body
         pool.query(`INSERT INTO formules (title, period, description, price) VALUES ('${title}', '${period}', '${description}', '${price}')`, (error, results) => {
             if (error){
                 throw error
@@ -123,6 +129,7 @@ async function addFormule(req, res){
             }
         })
     }
+    res.redirect(302, '/')
 }
 
 async function deleteFormule(req, res){
@@ -137,6 +144,7 @@ async function deleteFormule(req, res){
             }
         })
     }
+    res.redirect(302, '/')
 }
 
 async function addMenu(req, res){
@@ -151,6 +159,7 @@ async function addMenu(req, res){
             }
         })
     }
+    res.redirect(302, '/')
 }
 
 async function deleteMenu(req, res){
@@ -165,6 +174,7 @@ async function deleteMenu(req, res){
             }
         })
     }
+    res.redirect(302, '/')
 }
 
 // This function is used to set the image we want on the landing page of the site

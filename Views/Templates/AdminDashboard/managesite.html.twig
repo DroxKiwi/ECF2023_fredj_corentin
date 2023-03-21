@@ -104,7 +104,7 @@
                   <form action="/addMenu" method="post" enctype="multipart/form-data">
                       <h3>Ajouter un plat</h3>
                       <select class="form-control" id="type" name="type" required>
-                            <option value="entre">Entre</option>
+                            <option value="entre">Entrée</option>
                             <option value="entre">Plat</option>
                             <option value="entre">Dessert</option>
                       </select>
@@ -113,7 +113,7 @@
                       <br>
                       <textarea type="text" style="height:30vh;" class="form-control" id="description" name="description" placeholder="Description de votre plat" required="true"></textarea>
                       <br>
-                      <input type="number" class="form-control" id="price" name="price" placeholder="Prix de votre plat" required="true"/>
+                      <input type="float" class="form-control" id="price" name="price" placeholder="Prix de votre plat" required="true"/>
                       <br>
                       <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Ajouter</button>
                   </form>
@@ -143,7 +143,7 @@
 
             <div style="border: 5px solid black">
             <div class="row justify-content-center">
-              <h2>Gestion des formules à la carte</h2>
+              <h2>Gestion des menus à la carte</h2>
               <div class="col-6">
                   <form action="/addFormule" method="post" enctype="multipart/form-data">
                       <h3>Ajouter un menu</h3>
@@ -177,6 +177,50 @@
                 </li>
               </div>
             {% endfor %}
+          </div>
+
+
+          <!-- Open Hours management -->
+          
+          <div style="border: 5px solid black">
+            <div class="row justify-content-center">
+              <h2>Gestion des plats à la carte</h2>
+              <div class="col-6">
+                  <form action="/addMenu" method="post" enctype="multipart/form-data">
+                      <h3>Choisir un jour pour configurer les horaires</h3>
+                      <select class="form-control" id="day" name="day" required>
+                            <option value="entre">Lundi</option>
+                            <option value="entre">Mardi</option>
+                            <option value="entre">Mercredi</option>
+                            <option value="entre">Jeudi</option>
+                            <option value="entre">Vendredi</option>
+                            <option value="entre">Samedi</option>
+                            <option value="entre">Dimanche</option>
+                      </select>
+                      <br>
+                      <select class="form-control" id="state" name="state" required>
+                            <option value="open">Ouvert</option>
+                            <option value="close">Fermé</option>
+                      </select>
+                      <br>
+                      <label for="open">Ouvert de</label>
+                      <select class="form-control" id="openhour" name="openhour" required>
+                        {% for i in 0..24 %}
+                            <option value="entre">{{i}}h</option>
+                        {% endfor %}
+                      </select>
+                      <br>
+                      <label for="open">A</label>
+                      <select class="form-control" id="closehour" name="closehour" required>
+                        {% for i in 0..24 %}
+                            <option value={{i}}>{{i}}h</option>
+                        {% endfor %}
+                      </select>
+                      <br>
+                      <button type="submit" class="btn btn-outline-success" style="margin-left: 10px;">Ajouter</button>
+                  </form>
+              </div>
+            </div>
           </div>
 
           <!-- OffCanvas and hidden elements -->

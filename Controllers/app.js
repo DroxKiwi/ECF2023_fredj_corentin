@@ -144,8 +144,16 @@ async function redirectMenu(req, res){
                     }
                     else {
                         const menus = results.rows
-                        const templateVars = [id, modepreference, role, menus]
-                        res.render('./Templates/menu.html.twig', { templateVars })
+                        pool.query(`SELECT * FROM formules`, (error, results) => {
+                            if (error){
+                                throw error
+                            }
+                            else {
+                                const formules = results.rows
+                                const templateVars = [id, modepreference, role, menus, formules]
+                                res.render('./Templates/menu.html.twig', { templateVars })
+                            }
+                        })
                     }
                 })
             }

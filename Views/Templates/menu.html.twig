@@ -56,18 +56,22 @@
                 <br>
                 {{ menu.description }}
                 <br>
-                {{ menu.price }}
+                {{ menu.price }}€
               </li>
             </div>
           {% endfor %}
-
-          <h4>Formule Diner</h4>
-          <h4>date</h4>
-          <h4>entrée + plat + dessert</h4>
-
-          <h4>Formule Déjeuner</h4>
-          <h4>date</h4>
-          <h4>entrée + plat + dessert</h4>
+          <br>
+          {% for formule in templateVars[4] %}
+            <div style="border: 5px solid grey">
+              <li>
+                {{ formule.title }}
+                <br>
+                {{ formule.period }}
+                {{ formule.description }}
+                {{ formule.price }}€
+              </li>
+            </div>
+          {% endfor %}
 
         <!-- OffCanvas and hidden elements -->
           <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
