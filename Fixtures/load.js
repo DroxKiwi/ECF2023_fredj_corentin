@@ -22,7 +22,22 @@ function fixtureLoad(){
             throw error
         }
         else {
-            console.log("Fixture loaded ! you can now connect as admin ... wait pls :D the script will automatically close")
+            pool.query(`INSERT INTO openhours (day, state, openhour, closehour) VALUES
+                ('lundi', 'fermé', '0', '0'),
+                ('mardi', 'fermé', '0', '0'),
+                ('mercredi', 'fermé', '0', '0'),
+                ('jeudi', 'fermé', '0', '0'),
+                ('vendredi', 'fermé', '0', '0'),
+                ('samedi', 'fermé', '0', '0'),
+                ('dimanche', 'fermé', '0', '0')
+                `, (error, results) => {
+                if (error){
+                    throw error
+                }
+                else {
+                    console.log("Fixture loaded ! you can now connect as admin ... wait pls :D the script will automatically close")
+                }
+            })
         }
     })
 }

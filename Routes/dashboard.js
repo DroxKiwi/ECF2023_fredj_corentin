@@ -1,4 +1,4 @@
-const { redirectDashboard, redirectShowUser, redirectLogs, redirectFormcontact, redirectManageSite, uploadImage, deleteImage, selectImage, addMenu, deleteMenu, addFormule, deleteFormule } = require("../Controllers/dashboard")
+const { redirectDashboard, redirectShowUser, redirectLogs, redirectFormcontact, redirectManageSite, uploadImage, deleteImage, selectImage, addMenu, deleteMenu, addFormule, deleteFormule, addOpenHours, deleteOpenHours } = require("../Controllers/dashboard")
 
 function adminRoute(app){
 
@@ -18,7 +18,9 @@ function adminRoute(app){
     app.post('/addMenu', addMenu)
     app.post('/deleteMenu', deleteMenu)
     app.post('/addFormule', addFormule)
-    app.post('deleteFormule', deleteFormule)
+    app.post('/deleteFormule', deleteFormule)
+    app.post('/addOpenHours', addOpenHours)
+    app.post('/deleteOpenHours', deleteOpenHours)
 
 }
 

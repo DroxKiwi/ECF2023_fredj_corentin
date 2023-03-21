@@ -38,7 +38,6 @@ async function redirectShowUser(req, res){
                             }
                             else {
                                 const logs = results.rows
-                                console.log(logs)
                                 const templateVars = [ id, modepreference, user_id, email, token, role, logs ]
                                 res.render('./Templates/AdminDashboard/showuser.html.twig', { templateVars })
                             }
@@ -111,9 +110,42 @@ async function redirectFormcontact(req, res){
     }
 }
 
-async function setOpenHours(req, res){
+async function addOpenHours(req, res){
     if (req.role == "ROLE_ADMIN"){
+        const { day, state, openhour, closehour } = req.body
+        if (openhour > closehour){
+            res.send("Impossible d'ajouter la règle ! votre heure de début doit être inférieur à l'heure de fin !")
+        }
+        else {
+            pool.query(`INSERT INTO openhours (day, state, openhour, closehour) VALUES ('${day}', '${state}', '${openhour}', '${closehour}')`, (error, results) => {
+                if (error){
+                    throw error
+                }
+                else {
+                    res.redirect(302, 'managesite')
+                }
+            })
+        }
+    }
+    else {
+        res.redirect(302, '/')
+    }
+}
 
+async function deleteOpenHours(req, res){
+    if (req.role == "ROLE_ADMIN"){
+        const { openhour_id } = req.body
+        pool.query(`DELETE FROM openhours WHERE openhour_id = '${openhour_id}'`, (error, results) => {
+            if (error){
+                throw error
+            }
+            else {
+                res.redirect(302, 'managesite')
+            }
+        })
+    }
+    else {
+        res.redirect(302, '/')
     }
 }
 
@@ -129,7 +161,9 @@ async function addFormule(req, res){
             }
         })
     }
-    res.redirect(302, '/')
+    else {
+        res.redirect(302, '/')
+    }
 }
 
 async function deleteFormule(req, res){
@@ -144,7 +178,9 @@ async function deleteFormule(req, res){
             }
         })
     }
-    res.redirect(302, '/')
+    else {
+        res.redirect(302, '/')
+    }
 }
 
 async function addMenu(req, res){
@@ -159,7 +195,9 @@ async function addMenu(req, res){
             }
         })
     }
-    res.redirect(302, '/')
+    else {
+        res.redirect(302, '/')
+    }
 }
 
 async function deleteMenu(req, res){
@@ -174,7 +212,9 @@ async function deleteMenu(req, res){
             }
         })
     }
-    res.redirect(302, '/')
+    else {
+        res.redirect(302, '/')
+    }
 }
 
 // This function is used to set the image we want on the landing page of the site
@@ -197,7 +237,9 @@ async function selectImage(req, res){
             } 
         fs.unlinkSync('./Public/Uploads/'+imgName+'.png')
         })
-        res.redirect(302, 'managesite')
+    }
+    else {
+        res.redirect(302, '/')
     }
 }
 
@@ -242,7 +284,7 @@ async function uploadImage(req, res){
         }
     }
     else {
-        res.redirect(302, '/managesite')
+        res.redirect(302, '/')
     }
 }
 
@@ -263,7 +305,7 @@ async function deleteImage(req, res){
         })
     }
     else {
-        res.redirect(302, '/managesite')
+        res.redirect(302, '/')
     }
 }
 
@@ -296,8 +338,16 @@ async function redirectManageSite(req, res){
                                     }
                                     else {
                                         const formulesInDB = results.rows
-                                        const templateVars = [ id, modepreference, imagesInDB, menusInDB, formulesInDB ]
-                                        res.render('./Templates/AdminDashboard/managesite.html.twig', { templateVars })
+                                        pool.query(`SELECT * FROM openhours`, (error, results) => {
+                                            if (error){
+                                                throw error
+                                            }
+                                            else {
+                                                const openhoursInDB = results.rows
+                                                const templateVars = [ id, modepreference, imagesInDB, menusInDB, formulesInDB, openhoursInDB ]
+                                                res.render('./Templates/AdminDashboard/managesite.html.twig', { templateVars })
+                                            }
+                                        })
                                     }
                                 })
                             }
@@ -313,4 +363,4 @@ async function redirectManageSite(req, res){
 }
 
 
-module.exports = { redirectDashboard, redirectShowUser, redirectLogs, redirectFormcontact, redirectManageSite, uploadImage, deleteImage, selectImage, addMenu, deleteMenu, addFormule, deleteFormule }
+module.exports = { redirectDashboard, redirectShowUser, redirectLogs, redirectFormcontact, redirectManageSite, uploadImage, deleteImage, selectImage, addMenu, deleteMenu, addFormule, deleteFormule, addOpenHours, deleteOpenHours }

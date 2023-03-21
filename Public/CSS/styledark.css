@@ -15,4 +15,11 @@ table, th, td, tr {
 
 .userselect:hover {
   background-color: rgb(53, 88, 53) !important;
+}
+
+.footer {
+  background-color: black;
+  height: 200vh;
+  width: auto;
+  position: fixed;
 }/*# sourceMappingURL=styledark.css.map */
