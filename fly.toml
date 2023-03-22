@@ -1,4 +1,4 @@
-# fly.toml file generated for ecffredjcorentin on 2023-03-21T21:35:16+01:00
+# fly.toml file generated for ecffredjcorentin on 2023-03-22T03:56:27+01:00
 
 app = "ecffredjcorentin"
 kill_signal = "SIGINT"
