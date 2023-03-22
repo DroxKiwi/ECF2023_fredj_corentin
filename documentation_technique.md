@@ -3,7 +3,6 @@
 ## Serveur :
 
 - Fly.io
-- Version PHP 8.1
 
 ## Front :
 
