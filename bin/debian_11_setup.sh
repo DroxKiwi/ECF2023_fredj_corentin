@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# THIS SCRIPT IS ONLY USED TO SET UP A DISTANT DROPLET OR MACHINE
+
 # Setup the backend server for the APP on a Debian 11 server
 # Execute the following command to execute the script from a remote location:
 #   ssh root@hostname 'bash -s' < local_script.sh
