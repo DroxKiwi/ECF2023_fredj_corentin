@@ -8,9 +8,9 @@ Ceci est le rendu ECF pour évaluer les compétences.
 
 ## ***Je vous demande s'il vous plaît d'être indulgent ! Veuillez m'excusez par avance .. seulement j'ai codé une application entière (après avoir posé des questions sur le forum de STUDI), et 72H avant la date limite de rendu j'ai remqarqué qu'il y avait un annexe avec des consignes précises.. Je ne suis visiblement pas le pinguin le plus glissant de la banquise ..***
 ___
-## Voici le git de mon projet que j'ai codé si vous souhaitez vérifier : https://github.com/DroxKiwi/webappBeWave
+## Voici le git du premier projet que j'ai codé si vous souhaitez vérifier : https://github.com/DroxKiwi/webappBeWave
 
-## J'ai tout de même décidé de faire l'ECF en suivant les consignes (72h c'est court pour rattraper la boulette) ceci explique le manque de commit pour le début de ce projet, ayant utilisé une partie du projet précedent pour monter celui ci.
+## J'ai tout de même décidé de faire l'ECF en suivant les consignes (72h c'est court pour rattraper la boulette) ceci explique le manque de commit pour le début de ce projet, ayant utilisé une partie du projet précedent pour monter celui ci. Ceci étant dit ! Merci de prendre le temps d'évaluer.
 ___
 # **Mettre en place le backoffice en local**
 
@@ -39,7 +39,7 @@ ___
 
 ## Initialiser la base de données en éxecutant **/bin/init_database.sh** :
 
-Le fichier bash ***/bin/init_database.sh*** permet d'initialiser la BDD en local, il est important de vérifier les informations PostgreSQL avant de lancer le script ! Celles ci ne sont pas liées au fichier d'environnement ! Le fichier ***/bin/init_database.sh*** lancera à sont tour le fichier de fixture : **./Models/init_models.js**
+Le fichier bash ***/bin/init_database.sh*** permet d'initialiser la BDD en local, il est important de vérifier les informations données à PostgreSQL ***avant de lancer le script !*** Celles ci ne sont pas liées au fichier d'environnement et se trouve dans le script en question ! Le fichier ***/bin/init_database.sh*** lancera à son tour le fichier de fixture : **./Models/init_models.js**
 
 Une fois les informations postgreSQL vérifiées et correctes dans les scripts vous pouvez lancer le script d'initialisation de la BDD
 
