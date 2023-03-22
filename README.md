@@ -104,7 +104,7 @@ Il existe 3 fichiers qui éxecute l'application :
 
 ## Vous connecter et essayer l'application :
 
-A partir de là, l'application est lancée et vous pouvez vous connecter au compte admin injecter en BDD, en utilisant l'adresse : http://localhost:3000/
+A partir de là, l'application est lancée et vous pouvez vous connecter au compte admin injecter en BDD à l'adresse : http://localhost:3000/
 
 identifiant : ***admin@admin.com***
 
