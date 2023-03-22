@@ -7,12 +7,12 @@ Ceci est le dépôt pour l'ECF Graduate Developper
 Ceci est le rendu ECF pour évaluer les compétences.
 
 ## ***Je vous demande s'il vous plaît d'être indulgent ! Veuillez m'excusez par avance .. seulement j'ai codé une application entière (après avoir posé des question sur le forums de STUDI), et 72H avant la date limite de rendu j'ai remqarqué qu'il y avait un annexe avec des consignes précises.. Je ne suis visiblement pas le pinguin le plus glissant de la banquise ..***
-
+___
 ## Voici le git de mon projet que j'ai codé si vous souhaitez vérifier : https://github.com/DroxKiwi/webappBeWave
 
 ## J'ai tout de même décidé de faire l'ECF en suivant les consignes (72h c'est court pour rattraper la boulette) ceci explique le manque de commit pour le début du projet.
-
-# Mettre en place le backoffice en local
+___
+# **Mettre en place le backoffice en local**
 
 ## PostgreSQL 
 
