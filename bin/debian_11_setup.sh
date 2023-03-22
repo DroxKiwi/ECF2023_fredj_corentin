@@ -1,5 +1,5 @@
 #!/bin/bash
-# Setup the backend server for BeWave on a Debian 11 server
+# Setup the backend server for the APP on a Debian 11 server
 # Execute the following command to execute the script from a remote location:
 #   ssh root@hostname 'bash -s' < local_script.sh
 
