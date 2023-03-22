@@ -20,13 +20,11 @@
 - PostgreSQL
 
 
-![alt](./ECFimages/Diagrammedecasdutilisation.png)
+![Diagramme de cas d'utilisation](./ECFimages/Diagrammedecasdutilisation.png)
 
-![alt](./ECFimages/DiagrammedeséquencesUtilisateur.png)
+![Diagramme de séquences Utilisateur](./ECFimages/DiagrammedeséquencesUtilisateur.png)
 
-![alt](./ECFimages/Diagrammedeclasses.png)
-
-![alt](./ECFimages/CharteGraphiqueLeQuaiAntique.png)
+![Diagramme de classes](./ECFimages/Diagrammedeclasses.png)
 
 ___
 
