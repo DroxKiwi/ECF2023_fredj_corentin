@@ -83,7 +83,19 @@ Une fois les informations postgreSQL vérifiées et correctes en fonction de vot
     cd studiECF2023_Fredj_Corentin/bin
     ./init_database.sh
 
-Le script bash va donc redémarrer postgres (**nécessite l'accord sudo**), créer la base de données ***database_dev_studiecf*** et appliquer les modèles et les fixtures dans la base de données. Si la variable d'environnement du fichier .env.dev NODE_ENV est fixée sur "test" alors le script ne fonctionnera pas (par défaut NODE_ENV=dev) !
+Le script bash va donc redémarrer postgres (**nécessite l'accord sudo**), créer la base de données ***database_dev_studiecf*** et appliquer les modèles et les fixtures dans la base de données.
+
+Il existe 3 fichiers qui éxecute l'application :
+
+- ### index.js
+- ### secureSSL.js
+- ### app.js
+
+***index.js*** est appelé si l'on choisit de lancer l'application en environnement de développement.
+
+***secureSSL.js*** est appelé si l'on choisit de lancer l'application en environnement de production, j'ai initialement codé ce script pour faire tourner l'application avec un serveur **Apache2** sur un droplet **DigitalOcean**.
+
+***app.js*** a été créé pour que **fly.io** puisse connecter l'application à leur serveur.
 
 ## Lancer l'application en local :
 
