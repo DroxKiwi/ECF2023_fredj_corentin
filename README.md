@@ -6,7 +6,7 @@ Ceci est le dépôt pour l'ECF Graduate Developper
 
 Ceci est le rendu ECF pour évaluer les compétences.
 
-## ***Je vous demande s'il vous plaît d'être indulgent ! Veuillez m'excusez par avance .. seulement j'ai codé une application entière (après avoir posé des questions sur le forum de STUDI), et 72H avant la date limite de rendu j'ai remarqué qu'il y avait un annexe avec des consignes précises.. Je ne suis visiblement pas le pinguin le plus glissant de la banquise .. J'ai bien conscience d'être l'unique responsable de ma situation. Je souhaitais tout de même la partager avec vous esperant de la compréhension.***
+## ***Je vous demande s'il vous plaît d'être indulgent ! Veuillez m'excusez par avance .. seulement j'ai codé une application entière (après avoir posé des questions sur le forum de STUDI), et 72H avant la date limite de rendu j'ai remarqué qu'il y avait un annexe avec des consignes précises.. Je ne suis visiblement pas le pingouin le plus glissant de la banquise .. J'ai bien conscience d'être l'unique responsable de ma situation. Je souhaitais tout de même la partager avec vous esperant de la compréhension.***
 ___
 ## Voici le git du premier projet que j'ai codé si vous souhaitez vérifier : https://github.com/DroxKiwi/webappBeWave
 
