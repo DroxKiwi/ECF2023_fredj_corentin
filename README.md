@@ -39,9 +39,46 @@ ___
 
 ## Initialiser la base de données en éxecutant **/bin/init_database.sh** :
 
-Le fichier bash ***/bin/init_database.sh*** permet d'initialiser la BDD en local, il est important de vérifier les informations données à PostgreSQL ***avant de lancer le script !*** Celles ci ne sont pas liées au fichier d'environnement et se trouve dans le script en question ! Le fichier ***/bin/init_database.sh*** lancera à son tour le fichier de fixture : **./Models/init_models.js**
+Le fichier bash ***/bin/init_database.sh*** permet d'initialiser la BDD en local, il est important de vérifier les informations données à PostgreSQL ***avant de lancer le script !*** Celles ci ne sont pas liées au fichier d'environnement et se trouve dans le script en question ! 
 
-Une fois les informations postgreSQL vérifiées et correctes dans les scripts vous pouvez lancer le script d'initialisation de la BDD
+```js
+(...)
+
+// Verify information about database HERE !!!!
+const pool = new Pool({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'database_dev_studiecf',
+    password: 'psqlpsw',
+})
+
+
+// Read the SQL file
+(...)
+```
+
+Le fichier ***/bin/init_database.sh*** lancera à son tour le fichier de fixture : **./Models/init_models.js**
+
+De même il faut vérifier les valeur données à postgreSQL pour que le script fonctionne ! 
+
+```js
+(...)
+
+// Verify information about database HERE !!!!
+const pool = new Pool({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'database_dev_studiecf',
+    password: 'psqlpsw',
+})
+
+
+function fixtureLoad(){
+(...)
+
+```
+
+Une fois les informations postgreSQL vérifiées et correctes en fonction de votre installation, vous pouvez lancer le script d'initialisation de la BDD
 
     cd studiECF2023_Fredj_Corentin/bin
     ./init_database.sh
