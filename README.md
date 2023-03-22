@@ -20,152 +20,34 @@ ___
 
 ### **Le projet a été codé dans un environnement LINUX !**
 
-## Cloner le projet depuis git :
+## Cloner le projet en SSH depuis git :
 
-    git clone git@github.com:DroxKiwi/studiECF2023_Fredj_Corentin.git
+    git clone git@github.com:DroxKiwi/ECF2023_fredj_corentin.git
 
-## Télécharger les dépendances :
+## Cloner depuis HTTPS : 
+
+    https://github.com/DroxKiwi/ECF2023_fredj_corentin.git
+
+## Cloner depuis GitHub CLI :
+
+    gh repo clone DroxKiwi/ECF2023_fredj_corentin
+
+## Télécharger les dépendances une fois le projet cloné :
 
     cd /chemin_du_projet/studiECF2023_Fredj_Corentin
     npm install
 
-## Initialiser la base de données :
+## Initialiser la base de données en éxecutant **/bin/init_database.sh** :
 
 Le fichier bash ***/bin/init_database.sh*** permet d'initialiser la BDD en local, il est important de vérifier les informations PostgreSQL avant de lancer le script ! Celles ci ne sont pas liées au fichier d'environnement ! Le fichier ***/bin/init_database.sh*** lancera à sont tour le fichier de fixture : **./Models/init_models.js**
 
-**./Models/init_models.js**
-
-```js
-const fs = require('fs')
-const { Pool } = require('pg')
-
-
-// Verify information about database HERE !!!!
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'database_dev_studiecf',
-    password: 'psqlpsw',
-})
-
-
-// Read the SQL file
-const usersModel = fs.readFileSync('users.sql').toString()
-const contactsModel = fs.readFileSync('contacts.sql').toString()
-const logsModel = fs.readFileSync('logs.sql').toString()
-const imagesModel = fs.readFileSync('images.sql').toString()
-const menusModel = fs.readFileSync('menus.sql').toString()
-const formulesModel = fs.readFileSync('formules.sql').toString()
-const openhoursModel = fs.readFileSync('openhours.sql').toString()
-const reservationsModel = fs.readFileSync('reservations.sql').toString()
-
-// Execute the SQL commands in the database
-pool.query(usersModel, (err, result) => {
-    if (err) throw err
-    else {
-        console.log("userModel imported")
-        pool.query(contactsModel, (err, result) => {
-            if (err) throw err
-            else {
-                console.log("contactsModel imported")
-                pool.query(logsModel, (err, result) => {
-                    if (err) throw err
-                    else {
-                        console.log("logsModel imported")
-                        pool.query(imagesModel, (err, result) => {
-                            if (err) throw err
-                            else {
-                                console.log("imageModel imported")
-                                pool.query(menusModel, (err, result) => {
-                                    if (err) throw err
-                                    else {
-                                        console.log("menusModel imported")
-                                        pool.query(formulesModel, (err, result) => {
-                                            if (err) throw err
-                                            else {
-                                                console.log("formulesModel imported")
-                                                pool.query(openhoursModel, (err, result) => {
-                                                    if (err) throw err
-                                                    else {
-                                                        console.log("openhoursModel imported")
-                                                        pool.query(reservationsModel, (err, result) => {
-                                                            if (err) throw err
-                                                            else {
-                                                                console.log("reservationsModel imported")
-                                                                console.log("All models are imported succesfully !")
-                                                            }
-                                                        })
-                                                    }
-                                                })
-                                            }
-                                        })
-                                    }
-                                })
-                            }
-                        })
-                    }
-                })
-            }
-        })
-    }
-})
-```
-
-**./Fixtures/load.js**
-
-```js
-const { Pool } = require('pg');
-const encryptPassword = require("../Utils/encryptPassword")
-
-
-// Verify information about database HERE !!!!
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'database_dev_studiecf',
-    password: 'psqlpsw',
-})
-
-
-function fixtureLoad(){
-    const email = "admin@admin.com"
-    const password = "admin"
-    const role = "ROLE_ADMIN"
-    const {token, salt, hash} = encryptPassword(password)
-    console.log("Fixture load -> creat : Admin user | email : admin@admin.com, password : admin")
-    pool.query(`INSERT INTO users (email, token, salt, hash, role, preferences) VALUES ('${email}','${token}','${salt}', '${hash}', '${role}', '{"darkmode"}')`, (error, results) => {
-        if (error){
-            throw error
-        }
-        else {
-            pool.query(`INSERT INTO openhours (day, state, maxguests, openhour, closehour) VALUES
-                ('lundi', 'fermé', '30', '0', '0'),
-                ('mardi', 'ouvert', '30', '11', '14'),
-                ('mercredi', 'ouvert', '30', '11', '14'),
-                ('jeudi', 'ouvert', '30', '11', '14'),
-                ('vendredi', 'ouvert', '30', '11', '14'),
-                ('samedi', 'ouvert', '30', '19', '22'),
-                ('dimanche', 'fermé', '30', '0', '0')
-                `, (error, results) => {
-                if (error){
-                    throw error
-                }
-                else {
-                    console.log("Fixture loaded ! you can now connect as admin ... wait pls :D the script will automatically close")
-                }
-            })
-        }
-    })
-}
-
-fixtureLoad()
-```
 Une fois les informations postgreSQL vérifiées et correctes dans les scripts vous pouvez lancer le script d'initialisation de la BDD
 
     cd studiECF2023_Fredj_Corentin/bin
     ./init_database.sh
 
-Le script bash va donc redémarrer postgres (**nécessite l'accord sudo**), créé la base de données *database_dev_studiecf* et appliquer les fixtures et les modèles dans la base de données. Si la variable d'environnement du fichier .env.dev NODE_ENV est fixée sur "test" alors le script ne fonctionnera pas (par défaut NODE_ENV=dev) !
+Le script bash va donc redémarrer postgres (**nécessite l'accord sudo**), créer la base de données ***database_dev_studiecf*** et appliquer les modèles et les fixtures dans la base de données. Si la variable d'environnement du fichier .env.dev NODE_ENV est fixée sur "test" alors le script ne fonctionnera pas (par défaut NODE_ENV=dev) !
+
 ## Lancer l'application en local :
 
     cd ..
