@@ -1,6 +1,7 @@
 const { Pool } = require('pg');
 const encryptPassword = require("../Utils/encryptPassword")
 
+// INSERT INTO users (email, token, salt,  hash, role, preferences) VALUES ('corentinfredj.dev@gmail.com', 'iqC0_ikQaMW6tPYu', 'aKN1WN-Jxu6Sd3Zw', 'xZotNnkVaLPRwS2B9kFykKgrDBMJEzSwl/nUx2hj9rY=', 'ROLE_ADMIN', '{"darkmode"}');
 
 // Verify information about database HERE !!!!
 const pool = new Pool({
@@ -16,6 +17,7 @@ function fixtureLoad(){
     const password = "admin"
     const role = "ROLE_ADMIN"
     const {token, salt, hash} = encryptPassword(password)
+    console.log(token, salt, hash)
     console.log("Fixture load -> creat : Admin user | email : admin@admin.com, password : admin")
     pool.query(`INSERT INTO users (email, token, salt, hash, role, preferences) VALUES ('${email}','${token}','${salt}', '${hash}', '${role}', '{"darkmode"}')`, (error, results) => {
         if (error){

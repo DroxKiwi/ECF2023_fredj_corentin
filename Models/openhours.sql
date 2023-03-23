@@ -5,4 +5,4 @@ CREATE TABLE IF NOT EXISTS openhours (
     maxguests int NOT NULL,
     openhour int NOT NULL,
     closehour int NOT NULL
-)
+);

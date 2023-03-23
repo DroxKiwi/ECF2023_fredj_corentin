@@ -4,4 +4,4 @@ CREATE TABLE IF NOT EXISTS images (
     title varchar(256) NOT NULL,
     description varchar(256),
     selectedfor int
-)
+);

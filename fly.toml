@@ -1,6 +1,6 @@
-# fly.toml file generated for ecffredjcorentin on 2023-03-22T03:56:27+01:00
+# fly.toml file generated for ecfappcf on 2023-03-23T19:47:39+01:00
 
-app = "ecffredjcorentin"
+app = "ecfappcf"
 kill_signal = "SIGINT"
 kill_timeout = 5
 primary_region = "cdg"

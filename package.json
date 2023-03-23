@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "env-cmd -f ./.env.dev node index.js",
-    "prod": "env-cmd -f ./.env.prod node secureSSL.js"
+    "prod": "env-cmd -f ./.env.prod node app.js"
   },
   "repository": {
     "type": "git",

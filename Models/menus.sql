@@ -4,4 +4,4 @@ CREATE TABLE IF NOT EXISTS menus (
     title varchar(256) NOT NULL,
     description varchar(256) NOT NULL,
     price float NOT NULL
-)
+);

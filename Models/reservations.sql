@@ -5,4 +5,4 @@ CREATE TABLE IF NOT EXISTS reservations (
     dateres varchar(15) NOT NULL,
     hourres int NOT NULL,
     allergy varchar(256)
-)
+);

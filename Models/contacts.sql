@@ -4,4 +4,4 @@ CREATE TABLE IF NOT EXISTS contacts (
     message varchar(500),
     FOREIGN KEY (user_id)
         REFERENCES users(user_id)
-)
+);
