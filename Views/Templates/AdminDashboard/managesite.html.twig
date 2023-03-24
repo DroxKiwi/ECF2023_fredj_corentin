@@ -207,6 +207,13 @@
                             <option value="fermé">Fermé</option>
                       </select>
                       <br>
+                      <label for="open">Nombre maximum de couverts dans la journée</label>
+                      <select class="form-control" id="maxguests" name="maxguests" required>
+                        {% for i in 0..180 %}
+                            <option value={{i}}>{{i}}</option>
+                        {% endfor %}
+                      </select>
+                      <br>
                       <label for="open">Ouvert de</label>
                       <select class="form-control" id="openhour" name="openhour" required>
                         {% for i in 0..24 %}

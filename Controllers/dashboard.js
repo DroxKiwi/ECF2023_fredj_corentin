@@ -158,12 +158,12 @@ async function redirectFormcontact(req, res){
 
 async function addOpenHours(req, res){
     if (req.role == "ROLE_ADMIN"){
-        const { day, state, openhour, closehour } = req.body
+        const { day, state, maxguests, openhour, closehour } = req.body
         if (openhour > closehour){
             res.send("Impossible d'ajouter la règle ! votre heure de début doit être inférieur à l'heure de fin !")
         }
         else {
-            pool.query(`INSERT INTO openhours (day, state, openhour, closehour) VALUES ('${day}', '${state}', '${openhour}', '${closehour}')`, (error, results) => {
+            pool.query(`INSERT INTO openhours (day, state, maxguests, openhour, closehour) VALUES ('${day}', '${state}', '${maxguests}', '${openhour}', '${closehour}')`, (error, results) => {
                 if (error){
                     throw error
                 }
