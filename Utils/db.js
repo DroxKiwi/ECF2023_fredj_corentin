@@ -7,6 +7,7 @@ const pool = new Pool({
     password: process.env.PASSWORD || 'psqlpsw'
 })
 
+// Used for the fly.io version database 
 //const pool = new Pool({
 //  user: 'postgres',
 //  host: 'ecffredjcorentin-db.internal',
