@@ -17,5 +17,5 @@ const pool = new Pool({
 //  port: 5433,
 //  proxy: 5432
 //})
-//
-//module.exports = pool
+
+module.exports = pool
