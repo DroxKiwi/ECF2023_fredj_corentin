@@ -379,8 +379,16 @@ async function redirectReservation(req, res){
         })
     }
     else {
-        const id = "unauthentificated"
-        res.render('./Templates/reservation.html.twig', { id })
+        pool.query(`SELECT * FROM openhours`, (error, results) => {
+            if (error){
+                throw error
+            }
+            else {
+                const openhours_usrNonLog = results.rows
+                const id = "unauthentificated"
+                res.render('./Templates/reservation.html.twig', { id, openhours_usrNonLog })
+            }
+        })
     }
 }
 

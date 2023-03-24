@@ -58,6 +58,29 @@
               {% endif %}
             </ul>
           </header>
+
+          <div class="row justify-content-around">
+              <div class="col">
+                  <div class="row justify-content-between">
+                      {% for openhour in openhours_usrNonLog %}
+                          <div class="col-2">
+                              <li>
+                                  {{ openhour.day }}
+                                  {{ openhour.state }}
+                                  {% if openhour.state == "ouvert" %}
+                                  de
+                                  {{ openhour.openhour }}
+                                  h à 
+                                  {{ openhour.closehour }}
+                                  h
+                                  {% endif %}
+                              </li>
+                          </div>
+                      {% endfor %}
+                  </div>
+              </div>
+          </div>
+
           <br>
           {% if templateVars[4] != "recapresvalidated" %}
             <h2>
