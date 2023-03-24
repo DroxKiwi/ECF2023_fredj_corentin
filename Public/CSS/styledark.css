@@ -37,11 +37,12 @@ a {
   font: 0.9em "Timmana", serif;
   color: black;
   background-color: grey;
-  height: 5vh;
-  position: fixed;
+  height: 8vh;
+  position: sticky;
   bottom: 0;
   left: 0;
   opacity: 30%;
+  margin-top: 10vh;
 } 
 .imgHome {
   border-radius: 50px;
