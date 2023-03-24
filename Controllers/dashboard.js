@@ -1,8 +1,8 @@
 const pool = require('../Utils/db');
-var fs = require('fs');
+const fs = require('fs');
 const path = require('path');
 const easyimg = require('easyimage');
-const { resetPassword } = require('./user');
+const { resetPassword } = require('./user')
 
 async function redirectDashboard(req, res){
     if (req.role == "ROLE_ADMIN"){

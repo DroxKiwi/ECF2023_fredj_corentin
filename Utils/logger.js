@@ -1,12 +1,4 @@
-const { Pool } = require('pg');
-
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'database_dev_studiecf',
-    password: 'psqlpsw',
-})
-
+const pool = require('../Utils/db');
 
 function createLogMessage(user_role, date, action){
     const log = " : "+user_role+" : "+date+" : "+action

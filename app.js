@@ -4,7 +4,7 @@ const getRolesMiddleware = require("./Utils/getRolesMiddleware")
 const twig = require('twig')
 const bodyParser = require('body-parser')
 const app = express()
-const fileUpload = require('express-fileupload');
+const fileUpload = require('express-fileupload')
 
 // IF USING NPM !
 // const port = process.env.PORT

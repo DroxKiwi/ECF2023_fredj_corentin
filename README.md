@@ -2,7 +2,7 @@
 
 Ceci est le dépôt pour l'ECF Graduate Developper
 
-# Présentation 
+# Présentation
 
 Ceci est le rendu ECF pour évaluer les compétences.
 
@@ -95,7 +95,7 @@ Il existe 3 fichiers qui éxecute l'application :
 
 ***secureSSL.js*** est appelé si l'on choisit de lancer l'application en environnement de production, j'ai initialement codé ce script pour faire tourner l'application avec un serveur **Apache2** sur un droplet **DigitalOcean**.
 
-***app.js*** a été créé pour que **fly.io** puisse connecter l'application à leur serveur.
+***app.js*** a été créé pour que **fly.io** puisse connecter l'application à leur serveur en version de production. 
 
 ## Lancer l'application en local :
 

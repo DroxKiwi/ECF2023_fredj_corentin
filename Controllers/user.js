@@ -2,7 +2,7 @@ const encryptPassword = require("../Utils/encryptPassword")
 const decryptPassword = require("../Utils/decryptPassword")
 const generateRandomPassword = require ("../Utils/generatePassword")
 const logger = require("../Utils/logger")
-const pool = require('../Utils/db');
+const pool = require('../Utils/db')
 
 // Get all the users stored into the database and send it to the dashboard
 async function usersGet(req, res){
